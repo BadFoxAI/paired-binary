@@ -1,4 +1,4 @@
-# Paired Binary: A Framework for Information
+# Paired Binary System
 
 This repository contains the implementation for (["A Framework for Information Based on Complementary Pairing and Hierarchical Structures"](https://zenodo.org/records/15543486)) exploring binary complements and compositional patterning. The core idea revolves around N-bit Paired Entities (an N-bit binary value `X` and its bitwise complement `X’`) and how they form structured, self-similar hierarchies based on a compositional rule.
 
