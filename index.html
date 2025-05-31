@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paired Binary WASM Test Suite</title>
+</head>
+<body>
+
+<center>
+    <h1><font face="monospace" size="6">Paired Binary WASM Test Suite</font></h1>
+</center>
+
+<hr>
+
+<!-- Section 1: Propagator Setup -->
+<table border="1" width="80%" align="center" cellpadding="5">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#E0E0E0">
+                <font face="monospace" size="4">1. Propagator Setup</font>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="right" width="30%"><b><font face="monospace">S_base Values (comma-separated):</font></b></td>
+            <td><input type="text" id="sBaseValuesInput" value="0,1,2" size="40"></td>
+        </tr>
+        <tr>
+            <td align="right"><b><font face="monospace">N_base Bits:</font></b></td>
+            <td><input type="number" id="nBaseBitsInput" value="3" min="1"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button onclick="setupWasmPropagator()">Initialize/Update Propagator</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><hr><br>
+
+<!-- Section 2: Paired Entity Creation -->
+<table border="1" width="80%" align="center" cellpadding="5">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#E0E0E0">
+                <font face="monospace" size="4">2. Create Paired Entity</font>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="right" width="30%"><b><font face="monospace">X Value (decimal string):</font></b></td>
+            <td><input type="text" id="peXValueInput" value="2" size="30"></td>
+        </tr>
+        <tr>
+            <td align="right"><b><font face="monospace">N-bits:</font></b></td>
+            <td><input type="number" id="peNBitsInput" value="3" min="1"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button onclick="runCreatePairedEntity()">Create Paired Entity</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><hr><br>
+
+<!-- Section 3: Membership Test -->
+<table border="1" width="80%" align="center" cellpadding="5">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#E0E0E0">
+                <font face="monospace" size="4">3. Test S_N Membership</font>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="right" width="30%"><b><font face="monospace">X Value (decimal string):</font></b></td>
+            <td><input type="text" id="memberXValueInput" value="18" size="30"></td>
+        </tr>
+        <tr>
+            <td align="right"><b><font face="monospace">Target N-bits:</font></b></td>
+            <td><input type="number" id="memberNBitsInput" value="6" min="1"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button onclick="runIsMember()">Test Membership</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><hr><br>
+
+<!-- Section 4: Decomposition -->
+<table border="1" width="80%" align="center" cellpadding="5">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#E0E0E0">
+                <font face="monospace" size="4">4. Decompose to S_base</font>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="right" width="30%"><b><font face="monospace">X Value (decimal string):</font></b></td>
+            <td><input type="text" id="decomposeXValueInput" value="18" size="30"></td>
+        </tr>
+        <tr>
+            <td align="right"><b><font face="monospace">Target N-bits:</font></b></td>
+            <td><input type="number" id="decomposeNBitsInput" value="6" min="1"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button onclick="runDecompose()">Decompose</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><hr><br>
+
+<!-- Section 5: Composition -->
+<table border="1" width="80%" align="center" cellpadding="5">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#E0E0E0">
+                <font face="monospace" size="4">5. Compose from S_base</font>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="right" width="30%"><b><font face="monospace">S_base Components (comma-separated decimal strings):</font></b></td>
+            <td><input type="text" id="composeComponentsInput" value="2,2" size="40"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button onclick="runCompose()">Compose</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><hr><br>
+
+<!-- Section 6: Random Member Generation -->
+<table border="1" width="80%" align="center" cellpadding="5">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#E0E0E0">
+                <font face="monospace" size="4">6. Generate Random S_N Member</font>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="right" width="30%"><b><font face="monospace">Target N-bits:</font></b></td>
+            <td><input type="number" id="randomNBitsInput" value="6" min="1"></td>
+        </tr>
+        <tr>
+            <td align="right"><b><font face="monospace">Seed Offset (for PRNG):</font></b></td>
+            <td><input type="number" id="randomSeedOffsetInput" value="0"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button onclick="runGenerateRandom()">Generate Random</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><hr><br>
+
+<!-- Output Area -->
+<center>
+    <h3><font face="monospace" size="5">Results / Log</font></h3>
+    <textarea id="outputLog" rows="20" cols="100" readonly style="font-family: monospace;"></textarea>
+</center>
+
+<script type="module">
+    // Adjust path to your WASM package's JS file
+    import init, { 
+        setup_propagator, 
+        is_member, 
+        decompose_to_base, 
+        compose_from_base,
+        generate_random_member,
+        create_paired_entity 
+    } from './pkg/paired_binary.js'; // Ensure 'paired_binary' matches your crate name in Cargo.toml
+
+    const outputLog = document.getElementById('outputLog');
+    let wasmInitialized = false;
+
+    function log(message) {
+        console.log(message);
+        outputLog.value += `${new Date().toLocaleTimeString()}: ${JSON.stringify(message, null, 2)}\n\n`;
+        outputLog.scrollTop = outputLog.scrollHeight; // Scroll to bottom
+    }
+
+    function logError(context, error) {
+        console.error(context, error);
+        // JsValue errors might be objects, strings, or other things. Try to make them readable.
+        let errorString;
+        if (typeof error === 'string') {
+            errorString = error;
+        } else if (error && typeof error.message === 'string') { // Common for JS Error objects
+            errorString = error.message;
+        } else if (error && typeof error.toString === 'function') {
+            errorString = error.toString();
+        } else {
+            errorString = JSON.stringify(error);
+        }
+        outputLog.value += `${new Date().toLocaleTimeString()}: ERROR [${context}]: ${errorString}\n\n`;
+        outputLog.scrollTop = outputLog.scrollHeight;
+    }
+
+    async function initializeWasm() {
+        if (wasmInitialized) return true;
+        try {
+            await init();
+            log("WASM module initialized successfully.");
+            wasmInitialized = true;
+            // Automatically setup propagator with default values on first load
+            setupWasmPropagator(); 
+            return true;
+        } catch (e) {
+            logError("WASM Initialization Failed", e);
+            wasmInitialized = false;
+            return false;
+        }
+    }
+
+    // Expose functions to global scope for HTML onclick handlers
+    window.setupWasmPropagator = async () => {
+        if (!await initializeWasm()) return;
+        const sBaseValuesStr = document.getElementById('sBaseValuesInput').value;
+        const nBaseBits = parseInt(document.getElementById('nBaseBitsInput').value);
+        try {
+            setup_propagator(sBaseValuesStr, nBaseBits);
+            log(`Propagator initialized/updated: S_base_values='${sBaseValuesStr}', N_base_bits=${nBaseBits}`);
+        } catch (e) {
+            logError("Setup Propagator", e);
+        }
+    };
+
+    window.runCreatePairedEntity = async () => {
+        if (!await initializeWasm()) return;
+        const xValStr = document.getElementById('peXValueInput').value;
+        const nBits = parseInt(document.getElementById('peNBitsInput').value);
+        try {
+            const result = create_paired_entity(xValStr, nBits);
+            log({ action: "CreatePairedEntity", inputs: { x: xValStr, n: nBits }, result: result });
+        } catch (e) {
+            logError("CreatePairedEntity", e);
+        }
+    };
+
+    window.runIsMember = async () => {
+        if (!await initializeWasm()) return;
+        const xValStr = document.getElementById('memberXValueInput').value;
+        const nBits = parseInt(document.getElementById('memberNBitsInput').value);
+        try {
+            const result = is_member(xValStr, nBits);
+            log({ action: "IsMember", inputs: { x: xValStr, n: nBits }, result: result });
+        } catch (e) {
+            logError("IsMember", e);
+        }
+    };
+
+    window.runDecompose = async () => {
+        if (!await initializeWasm()) return;
+        const xValStr = document.getElementById('decomposeXValueInput').value;
+        const nBits = parseInt(document.getElementById('decomposeNBitsInput').value);
+        try {
+            const components_js_array = decompose_to_base(xValStr, nBits);
+            const components = [];
+            for(let i=0; i < components_js_array.length; i++) components.push(components_js_array.get(i));
+            log({ action: "Decompose", inputs: { x: xValStr, n: nBits }, result: components });
+        } catch (e) {
+            logError("Decompose", e);
+        }
+    };
+
+    window.runCompose = async () => {
+        if (!await initializeWasm()) return;
+        const componentsStr = document.getElementById('composeComponentsInput').value;
+        const componentsArr = componentsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
+        // js_sys::Array expects JsValue elements, so convert strings to JsValue
+        const js_array_for_wasm = js_sys.Array.new_with_length(componentsArr.length);
+        for (let i = 0; i < componentsArr.length; i++) {
+            js_array_for_wasm.set(i, JsValue.from_str(componentsArr[i]));
+        }
+        try {
+            const result = compose_from_base(js_array_for_wasm);
+            log({ action: "Compose", inputs: { components: componentsArr }, result: result });
+        } catch (e) {
+            logError("Compose", e);
+        }
+    };
+
+    window.runGenerateRandom = async () => {
+        if (!await initializeWasm()) return;
+        const nBits = parseInt(document.getElementById('randomNBitsInput').value);
+        const seedOffset = parseInt(document.getElementById('randomSeedOffsetInput').value);
+        try {
+            const result = generate_random_member(nBits, seedOffset);
+            log({ action: "GenerateRandom", inputs: { n: nBits, seedOffset: seedOffset }, result: result });
+        } catch (e) {
+            logError("GenerateRandom", e);
+        }
+    };
+
+    // Initialize WASM on page load
+    initializeWasm();
+
+</script>
+
+</body>
+</html>

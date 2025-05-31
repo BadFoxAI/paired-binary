@@ -1,0 +1,15 @@
+{
+  "name": "paired_binary",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "paired_binary_bg.wasm",
+    "paired_binary.js",
+    "paired_binary.d.ts"
+  ],
+  "main": "paired_binary.js",
+  "types": "paired_binary.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
