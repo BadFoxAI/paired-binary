@@ -7,179 +7,179 @@
 <body>
 
 <center>
-    <h1><font face="monospace" size="6">Paired Binary WASM Test Suite</font></h1>
+    <h1><font face="monospace" size="5">Paired Binary WASM Test Suite</font></h1>
 </center>
 
-<hr>
+<hr width="80%">
 
 <!-- Section 1: Propagator Setup -->
-<table border="1" width="80%" align="center" cellpadding="5">
+<table border="1" width="80%" align="center" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
             <th colspan="2" bgcolor="#E0E0E0">
-                <font face="monospace" size="4">1. Propagator Setup</font>
+                <font face="monospace" size="3">1. Propagator Setup</font>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="right" width="30%"><b><font face="monospace">S_base Values (comma-separated):</font></b></td>
-            <td><input type="text" id="sBaseValuesInput" value="0,1,2" size="40"></td>
+            <td align="right" width="40%"><font face="monospace" size="2"><b>S_base Values (comma-separated):</b></font></td>
+            <td><input type="text" id="sBaseValuesInput" value="0,1,2" size="35"></td>
         </tr>
         <tr>
-            <td align="right"><b><font face="monospace">N_base Bits:</font></b></td>
+            <td align="right"><font face="monospace" size="2"><b>N_base Bits:</b></font></td>
             <td><input type="number" id="nBaseBitsInput" value="3" min="1"></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button onclick="setupWasmPropagator()">Initialize/Update Propagator</button>
+                <button onclick="setupWasmPropagator()"><font face="monospace" size="2">Initialize/Update Propagator</font></button>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br><hr><br>
+<hr width="80%">
 
 <!-- Section 2: Paired Entity Creation -->
-<table border="1" width="80%" align="center" cellpadding="5">
+<table border="1" width="80%" align="center" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
             <th colspan="2" bgcolor="#E0E0E0">
-                <font face="monospace" size="4">2. Create Paired Entity</font>
+                <font face="monospace" size="3">2. Create Paired Entity</font>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="right" width="30%"><b><font face="monospace">X Value (decimal string):</font></b></td>
+            <td align="right" width="40%"><font face="monospace" size="2"><b>X Value (decimal string):</b></font></td>
             <td><input type="text" id="peXValueInput" value="2" size="30"></td>
         </tr>
         <tr>
-            <td align="right"><b><font face="monospace">N-bits:</font></b></td>
+            <td align="right"><font face="monospace" size="2"><b>N-bits:</b></font></td>
             <td><input type="number" id="peNBitsInput" value="3" min="1"></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button onclick="runCreatePairedEntity()">Create Paired Entity</button>
+                <button onclick="runCreatePairedEntity()"><font face="monospace" size="2">Create Paired Entity</font></button>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br><hr><br>
+<hr width="80%">
 
 <!-- Section 3: Membership Test -->
-<table border="1" width="80%" align="center" cellpadding="5">
+<table border="1" width="80%" align="center" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
             <th colspan="2" bgcolor="#E0E0E0">
-                <font face="monospace" size="4">3. Test S_N Membership</font>
+                <font face="monospace" size="3">3. Test S_N Membership</font>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="right" width="30%"><b><font face="monospace">X Value (decimal string):</font></b></td>
+            <td align="right" width="40%"><font face="monospace" size="2"><b>X Value (decimal string):</b></font></td>
             <td><input type="text" id="memberXValueInput" value="18" size="30"></td>
         </tr>
         <tr>
-            <td align="right"><b><font face="monospace">Target N-bits:</font></b></td>
+            <td align="right"><font face="monospace" size="2"><b>Target N-bits:</b></font></td>
             <td><input type="number" id="memberNBitsInput" value="6" min="1"></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button onclick="runIsMember()">Test Membership</button>
+                <button onclick="runIsMember()"><font face="monospace" size="2">Test Membership</font></button>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br><hr><br>
+<hr width="80%">
 
 <!-- Section 4: Decomposition -->
-<table border="1" width="80%" align="center" cellpadding="5">
+<table border="1" width="80%" align="center" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
             <th colspan="2" bgcolor="#E0E0E0">
-                <font face="monospace" size="4">4. Decompose to S_base</font>
+                <font face="monospace" size="3">4. Decompose to S_base</font>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="right" width="30%"><b><font face="monospace">X Value (decimal string):</font></b></td>
+            <td align="right" width="40%"><font face="monospace" size="2"><b>X Value (decimal string):</b></font></td>
             <td><input type="text" id="decomposeXValueInput" value="18" size="30"></td>
         </tr>
         <tr>
-            <td align="right"><b><font face="monospace">Target N-bits:</font></b></td>
+            <td align="right"><font face="monospace" size="2"><b>Target N-bits:</b></font></td>
             <td><input type="number" id="decomposeNBitsInput" value="6" min="1"></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button onclick="runDecompose()">Decompose</button>
+                <button onclick="runDecompose()"><font face="monospace" size="2">Decompose</font></button>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br><hr><br>
+<hr width="80%">
 
 <!-- Section 5: Composition -->
-<table border="1" width="80%" align="center" cellpadding="5">
+<table border="1" width="80%" align="center" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
             <th colspan="2" bgcolor="#E0E0E0">
-                <font face="monospace" size="4">5. Compose from S_base</font>
+                <font face="monospace" size="3">5. Compose from S_base</font>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="right" width="30%"><b><font face="monospace">S_base Components (comma-separated decimal strings):</font></b></td>
-            <td><input type="text" id="composeComponentsInput" value="2,2" size="40"></td>
+            <td align="right" width="40%"><font face="monospace" size="2"><b>S_base Components (comma-separated):</b></font></td>
+            <td><input type="text" id="composeComponentsInput" value="2,2" size="35"></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button onclick="runCompose()">Compose</button>
+                <button onclick="runCompose()"><font face="monospace" size="2">Compose</font></button>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br><hr><br>
+<hr width="80%">
 
 <!-- Section 6: Random Member Generation -->
-<table border="1" width="80%" align="center" cellpadding="5">
+<table border="1" width="80%" align="center" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
             <th colspan="2" bgcolor="#E0E0E0">
-                <font face="monospace" size="4">6. Generate Random S_N Member</font>
+                <font face="monospace" size="3">6. Generate Random S_N Member</font>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="right" width="30%"><b><font face="monospace">Target N-bits:</font></b></td>
+            <td align="right" width="40%"><font face="monospace" size="2"><b>Target N-bits:</b></font></td>
             <td><input type="number" id="randomNBitsInput" value="6" min="1"></td>
         </tr>
         <tr>
-            <td align="right"><b><font face="monospace">Seed Offset (for PRNG):</font></b></td>
+            <td align="right"><font face="monospace" size="2"><b>Seed Offset (for PRNG):</b></font></td>
             <td><input type="number" id="randomSeedOffsetInput" value="0"></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button onclick="runGenerateRandom()">Generate Random</button>
+                <button onclick="runGenerateRandom()"><font face="monospace" size="2">Generate Random</font></button>
             </td>
         </tr>
     </tbody>
 </table>
 
-<br><hr><br>
+<hr width="80%">
 
 <!-- Output Area -->
 <center>
-    <h3><font face="monospace" size="5">Results / Log</font></h3>
-    <textarea id="outputLog" rows="20" cols="100" readonly style="font-family: monospace;"></textarea>
+    <h3><font face="monospace" size="4">Results / Log</font></h3>
+    <textarea id="outputLog" rows="15" cols="90" readonly="readonly" style="font-family: monospace;"></textarea>
 </center>
 
 <script type="module">
@@ -198,24 +198,30 @@
 
     function log(message) {
         console.log(message);
-        outputLog.value += `${new Date().toLocaleTimeString()}: ${JSON.stringify(message, null, 2)}\n\n`;
-        outputLog.scrollTop = outputLog.scrollHeight; // Scroll to bottom
+        const currentLog = outputLog.value;
+        // Keep only a certain amount of log to prevent browser slowdown
+        const maxLogLength = 10000; 
+        const newMessage = `${new Date().toLocaleTimeString()}: ${JSON.stringify(message, null, 2)}\n\n`;
+        outputLog.value = (currentLog + newMessage).slice(-maxLogLength);
+        outputLog.scrollTop = outputLog.scrollHeight; 
     }
 
     function logError(context, error) {
         console.error(context, error);
-        // JsValue errors might be objects, strings, or other things. Try to make them readable.
         let errorString;
         if (typeof error === 'string') {
             errorString = error;
-        } else if (error && typeof error.message === 'string') { // Common for JS Error objects
+        } else if (error && typeof error.message === 'string') { 
             errorString = error.message;
         } else if (error && typeof error.toString === 'function') {
             errorString = error.toString();
         } else {
             errorString = JSON.stringify(error);
         }
-        outputLog.value += `${new Date().toLocaleTimeString()}: ERROR [${context}]: ${errorString}\n\n`;
+        const currentLog = outputLog.value;
+        const maxLogLength = 10000;
+        const newErrorMessage = `${new Date().toLocaleTimeString()}: ERROR [${context}]: ${errorString}\n\n`;
+        outputLog.value = (currentLog + newErrorMessage).slice(-maxLogLength);
         outputLog.scrollTop = outputLog.scrollHeight;
     }
 
@@ -225,7 +231,6 @@
             await init();
             log("WASM module initialized successfully.");
             wasmInitialized = true;
-            // Automatically setup propagator with default values on first load
             setupWasmPropagator(); 
             return true;
         } catch (e) {
@@ -235,7 +240,6 @@
         }
     }
 
-    // Expose functions to global scope for HTML onclick handlers
     window.setupWasmPropagator = async () => {
         if (!await initializeWasm()) return;
         const sBaseValuesStr = document.getElementById('sBaseValuesInput').value;
@@ -277,9 +281,24 @@
         const xValStr = document.getElementById('decomposeXValueInput').value;
         const nBits = parseInt(document.getElementById('decomposeNBitsInput').value);
         try {
-            const components_js_array = decompose_to_base(xValStr, nBits);
+            const wasm_result_array = decompose_to_base(xValStr, nBits); // This is a js_sys::Array
+            
+            // Convert js_sys::Array to a native JavaScript array of strings
             const components = [];
-            for(let i=0; i < components_js_array.length; i++) components.push(components_js_array.get(i));
+            // js_sys::Array can be iterated using for...of if wasm-bindgen features are right,
+            // or by manually getting length and using get(i).
+            // Array.from also works robustly.
+            const nativeJsArray = Array.from(wasm_result_array); // Converts iterable to native JS array
+            for (const jsVal of nativeJsArray) {
+                 // Each element in nativeJsArray is a JsValue (likely string)
+                 if (typeof jsVal === 'string') { // If already a JS string
+                    components.push(jsVal);
+                 } else if (jsVal && typeof jsVal.as_string === 'function') { // If a JsValue object with as_string()
+                    components.push(jsVal.as_string());
+                 } else {
+                    components.push(String(jsVal)); // Fallback
+                 }
+            }
             log({ action: "Decompose", inputs: { x: xValStr, n: nBits }, result: components });
         } catch (e) {
             logError("Decompose", e);
@@ -290,10 +309,11 @@
         if (!await initializeWasm()) return;
         const componentsStr = document.getElementById('composeComponentsInput').value;
         const componentsArr = componentsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
-        // js_sys::Array expects JsValue elements, so convert strings to JsValue
+        
         const js_array_for_wasm = js_sys.Array.new_with_length(componentsArr.length);
         for (let i = 0; i < componentsArr.length; i++) {
-            js_array_for_wasm.set(i, JsValue.from_str(componentsArr[i]));
+            // wasm_bindgen will convert native JS strings to JsValue strings automatically here.
+            js_array_for_wasm.set(i, componentsArr[i]); 
         }
         try {
             const result = compose_from_base(js_array_for_wasm);
@@ -315,7 +335,6 @@
         }
     };
 
-    // Initialize WASM on page load
     initializeWasm();
 
 </script>
