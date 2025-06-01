@@ -4,6 +4,8 @@ This repository contains the implementation for (["A Framework for Information B
 
 This project aims to provide the foundational tools to explore, generate, and analyze these structures, with potential applications in understanding information, novel encoding schemes, or models of emergent complexity.
 
+(["- Test / Example Link -"](https://paired-binary.netlify.app/))
+
 ## Project Overview
 
 The framework proposes that an initial pattern, defined at a low bit-width (e.g., N=3), can propagate to higher bit-widths (e.g., N=6, N=12), selecting specific subsets of Paired Entities at each level. This creates a self-similar, hierarchical structure. For instance, an N=3 pattern selecting 3 `X`-values might lead to `3*3=9` selected Paired Entities at N=6, and this N=6 subset could, in turn, select `9*9=81` Paired Entities at N=12.
