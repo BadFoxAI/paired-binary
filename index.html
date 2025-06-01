@@ -25,24 +25,9 @@
             color: #2c3e50;
             text-align: center;
         }
-        h1 { 
-            margin-bottom: 30px; 
-            font-size: 2em;
-        }
-        h2 { 
-            margin-top: 30px; 
-            margin-bottom: 15px; 
-            border-bottom: 1px solid #eee; 
-            padding-bottom: 10px; 
-            font-size: 1.5em;
-        }
-        h3 { 
-            margin-top: 20px; 
-            margin-bottom: 10px; 
-            text-align:left; 
-            font-size: 1.2em; 
-            color: #34495e;
-        }
+        h1 { margin-bottom: 30px; font-size: 2em;}
+        h2 { margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 1.5em;}
+        h3 { margin-top: 20px; margin-bottom: 10px; text-align:left; font-size: 1.2em; color: #34495e;}
 
         .control-group {
             margin-bottom: 20px;
@@ -60,109 +45,38 @@
         .control-group input[type="text"],
         .control-group input[type="number"],
         .control-group select {
-            width: calc(100% - 22px); /* Full width minus padding and border */
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1em;
+            width: calc(100% - 22px);
+            padding: 10px; margin-bottom: 10px; border: 1px solid #ccc;
+            border-radius: 4px; box-sizing: border-box; font-size: 1em;
         }
         button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.2s ease;
-            display: block;
-            width: 100%;
-            margin-top: 10px;
+            background-color: #3498db; color: white; padding: 10px 18px;
+            border: none; border-radius: 4px; cursor: pointer; font-size: 1em;
+            transition: background-color 0.2s ease; display: block; width: 100%; margin-top: 10px;
         }
-        button:hover {
-            background-color: #2980b9;
-        }
-        button:active {
-            background-color: #2573a7;
-        }
+        button:hover { background-color: #2980b9; }
+        button:active { background-color: #2573a7; }
 
-        #outputLogContainer { 
-            margin-top: 30px; 
+        #mainOutputArea {
+            margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 4px;
+            background-color: #f9f9f9; min-height: 50px; font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
         }
-        #outputLog {
-            width: 100%; 
-            height: 300px; 
-            font-family: 'Courier New', Courier, monospace; 
-            font-size: 0.9em;
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-            padding: 10px;
-            box-sizing: border-box; 
-            background-color: #f9f9f9;
-            white-space: pre-wrap; 
-            overflow-y: auto;
-        }
-        .status-indicator { 
-            padding: 8px; 
-            margin-bottom: 15px; 
-            border-radius: 4px; 
-            text-align: center; 
-            font-weight: bold;
-        }
-        .status-ok { 
-            background-color: #e8f5e9; 
-            color: #2e7d32; 
-            border: 1px solid #c8e6c9;
-        }
-        .status-error { 
-            background-color: #ffebee; 
-            color: #c62828; 
-            border: 1px solid #ffcdd2;
-        }
-        .test-suite-button { 
-            background-color: #2ecc71;
-        }
-        .test-suite-button:hover { 
-            background-color: #27ae60;
-        }
-         .test-suite-button:active {
-            background-color: #229954;
-        }
-        details { 
-            background-color: #fdfdfd; /* Slightly different from control-group for distinction */
-            border: 1px solid #e0e0e0; 
-            border-radius: 4px; 
-            margin-bottom: 10px; 
-            padding: 0;
-        }
-        summary { 
-            font-weight: bold; 
-            padding: 10px 15px; 
-            cursor: pointer; 
-            background-color: #f0f2f5; /* Lighter than details content */
-            border-radius: 4px; /* Rounded if details is not open */
-            transition: background-color 0.2s ease;
-        }
-        details[open] summary {
-            border-bottom: 1px solid #e0e0e0;
-            border-radius: 4px 4px 0 0; /* Top corners rounded when open */
-        }
-        summary:hover {
-            background-color: #e9ecef;
-        }
-        .details-content { 
-            padding: 20px;
-            border-top: 1px solid #e0e0e0; /* Separator if summary isn't styled with border-bottom when open */
-        }
-        #s6Canvas { 
-            border: 1px solid #ccc; 
-            background-color: #ffffff; 
-            display: block; 
-            margin: 15px auto;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+        .status-indicator { padding: 8px; margin-bottom: 15px; border-radius: 4px; text-align: center; font-weight: bold; }
+        .status-ok { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9;}
+        .status-error { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2;}
+        .test-suite-button { background-color: #2ecc71; }
+        .test-suite-button:hover { background-color: #27ae60; }
+        .test-suite-button:active { background-color: #229954; }
+        details { background-color: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 4px; margin-bottom: 10px; padding: 0;}
+        summary { font-weight: bold; padding: 10px 15px; cursor: pointer; background-color: #f0f2f5; border-radius: 4px; transition: background-color 0.2s ease;}
+        details[open] summary { border-bottom: 1px solid #e0e0e0; border-radius: 4px 4px 0 0; }
+        summary:hover { background-color: #e9ecef; }
+        .details-content { padding: 20px; border-top: 1px solid #e0e0e0; }
+        #s6Canvas { border: 1px solid #ccc; background-color: #ffffff; display: block; margin: 15px auto; box-shadow: 0 1px 3px rgba(0,0,0,0.1);}
+        #fullLogContainer { margin-top: 30px;}
+        #fullOutputLog { display:none; /* Hidden by default */ width: 100%; height: 300px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; border: 1px solid #ccc; border-radius: 4px; padding: 10px; box-sizing: border-box; background-color: #f9f9f9; white-space: pre-wrap; overflow-y: auto; }
+        .log-controls button { width: auto; display: inline-block; margin-right: 10px; padding: 8px 12px; font-size: 0.9em;}
     </style>
 </head>
 <body>
@@ -170,6 +84,10 @@
     <div class="container">
         <h1>Paired Binary Explorer & Analyzer (WASM)</h1>
         <div id="wasmStatus" class="status-indicator">Loading WASM...</div>
+
+        <div id="mainOutputArea"> <!-- Dedicated area for single action results -->
+            <p><i>Results of manual actions will appear here. Full log in browser console.</i></p>
+        </div>
 
         <h2>1. Propagator Setup</h2>
         <div class="control-group">
@@ -261,14 +179,18 @@
             </div>
         </details>
 
-        <div id="outputLogContainer">
-            <h2>Results / Log</h2>
-            <textarea id="outputLog" readonly></textarea>
+        <div id="fullLogContainer">
+            <h2>Verbose Log</h2>
+            <div class="log-controls">
+                <button onclick="toggleFullLog()">Toggle Full Log Display</button>
+                <button onclick="exportFullLog()">Export Full Log</button>
+                <button onclick="clearFullLog()">Clear Full Log</button>
+            </div>
+            <textarea id="fullOutputLog" readonly></textarea>
         </div>
     </div>
 
     <script type="module">
-        // Adjust path to your WASM package's JS file
         import init, { 
             setup_propagator, 
             is_member, 
@@ -278,39 +200,37 @@
             create_paired_entity 
         } from './pkg/paired_binary.js';
 
-        const outputLog = document.getElementById('outputLog');
+        const mainOutputArea = document.getElementById('mainOutputArea');
+        const fullOutputLog = document.getElementById('fullOutputLog');
         const wasmStatusDiv = document.getElementById('wasmStatus');
         let wasmInitialized = false;
         let currentSBase = "0,1,2"; 
         let currentNBase = 3;
 
-        function log(message, testName = "Manual") {
-            console.log(testName, message);
-            const currentLogVal = outputLog.value;
-            const maxLogLength = 30000; 
-            const entry = `${new Date().toLocaleTimeString()}: [${testName}] ${JSON.stringify(message, null, 2)}\n\n`;
-            outputLog.value = (currentLogVal + entry).slice(-maxLogLength);
-            outputLog.scrollTop = outputLog.scrollHeight; 
-        }
-        function logError(context, error, testName = "Manual") {
-            console.error(testName, context, error);
-            let errorString;
-            if (error instanceof Error) { 
-                errorString = `${error.name}: ${error.message}`;
-            } else if (typeof error === 'string') { 
-                errorString = error;
-            } else if (error && typeof error.toString === 'function') {
-                errorString = error.toString();
+        // Function to log to the main, concise output area
+        function displayMainResult(action, resultOrError, isError = false) {
+            let content = `<strong>Action: ${action}</strong><br>`;
+            if (isError) {
+                content += `<span style="color: red;">Error: ${resultOrError}</span>`;
             } else {
-                try { errorString = JSON.stringify(error); } 
-                catch (e) { errorString = "Could not stringify error object.";}
+                content += `Result: <pre>${JSON.stringify(resultOrError, null, 2)}</pre>`;
             }
-            const currentLogVal = outputLog.value;
-            const maxLogLength = 30000;
-            const entry = `${new Date().toLocaleTimeString()}: ERROR [${testName} - ${context}]: ${errorString}\n\n`;
-            outputLog.value = (currentLogVal + entry).slice(-maxLogLength);
-            outputLog.scrollTop = outputLog.scrollHeight;
-         }
+            mainOutputArea.innerHTML = content;
+        }
+
+        // Function to log verbosely (to console and hidden textarea)
+        function verboseLog(message, context = "Generic") {
+            console.log(`[${context}]`, message);
+            const timestamp = new Date().toLocaleTimeString();
+            const currentLogVal = fullOutputLog.value;
+            const maxLogLength = 50000; 
+            const entry = `${timestamp}: [${context}] ${typeof message === 'string' ? message : JSON.stringify(message, null, 2)}\n\n`;
+            fullOutputLog.value = (currentLogVal + entry).slice(-maxLogLength);
+            // Don't auto-scroll full log unless it's visible
+            if (fullOutputLog.style.display !== 'none') {
+                fullOutputLog.scrollTop = fullOutputLog.scrollHeight;
+            }
+        }
         
         async function initializeWasm() {
             if (wasmInitialized) return true;
@@ -318,143 +238,132 @@
                 await init(); 
                 wasmStatusDiv.textContent = "WASM Module Initialized Successfully.";
                 wasmStatusDiv.className = "status-indicator status-ok";
-                log("WASM module initialized successfully.", "System");
+                verboseLog("WASM module initialized successfully.", "System");
                 wasmInitialized = true;
-                await setupWasmPropagator(false); 
+                await setupWasmPropagatorInternal(false); // Internal call, don't update main output
                 return true;
             } catch (e) {
                 wasmStatusDiv.textContent = "WASM Initialization Failed! Check console.";
                 wasmStatusDiv.className = "status-indicator status-error";
-                logError("WASM Initialization Failed", e, "System");
+                verboseLog(`WASM Initialization Failed: ${e}`, "System");
                 wasmInitialized = false;
                 return false;
             }
         }
-
-        window.setupWasmPropagator = async (doLog = true) => { 
-            if (!wasmInitialized && !(await initializeWasm())) return;
+        
+        // Internal setup function, doesn't update mainOutputArea
+        async function setupWasmPropagatorInternal(logToVerbose = true) {
+            if (!wasmInitialized) return; // Should be called after init
             const sBaseValuesStr = document.getElementById('sBaseValuesInput').value;
             const nBaseBits = parseInt(document.getElementById('nBaseBitsInput').value);
             currentSBase = sBaseValuesStr; 
             currentNBase = nBaseBits;
             try {
                 setup_propagator(sBaseValuesStr, nBaseBits);
-                if (doLog) log(`Propagator initialized/updated: S_base_values='${sBaseValuesStr}', N_base_bits=${nBaseBits}`, "Setup");
+                if (logToVerbose) verboseLog(`Propagator set: S_base='${sBaseValuesStr}', N_base=${nBaseBits}`, "Setup");
             } catch (e) {
-                logError("Setup Propagator", e, "Setup");
+                verboseLog(`Error setting up propagator: ${e}`, "Setup");
+                displayMainResult("Setup Propagator", String(e), true);
             }
+        }
+        
+        // Public version for button click
+        window.setupWasmPropagator = async () => {
+            if (!await initializeWasm()) return;
+            await setupWasmPropagatorInternal(true); // Log this one to verbose
+            displayMainResult("Setup Propagator", `S_base='${currentSBase}', N_base=${currentNBase} - Initialized/Updated.`);
         };
         
-        window.runCreatePairedEntity = async () => {
+        // Wrapper for WASM calls from manual buttons
+        async function runWasmOperation(actionName, operationFunc, ...args) {
             if (!await initializeWasm()) return;
+            displayMainResult(actionName, "Processing...", false); // Indicate processing
+            const startTime = performance.now();
+            try {
+                const result = await operationFunc(...args); // Await if operationFunc itself returns a Promise
+                const endTime = performance.now();
+                const timedResult = { result: result, time_ms: (endTime - startTime).toFixed(3) };
+                displayMainResult(actionName, timedResult, false);
+                verboseLog({action: actionName, inputs: args, ...timedResult}, "ManualOp");
+                return result; // Return for automated tests if needed
+            } catch (e) {
+                const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e);
+                displayMainResult(actionName, errorStr, true);
+                verboseLog(`Error in ${actionName}: ${errorStr}`, "ManualOp");
+                throw e; // Re-throw for automated test runner to catch
+            }
+        }
+
+        window.runCreatePairedEntity = () => {
             const xValStr = document.getElementById('peXValueInput').value;
             const nBits = parseInt(document.getElementById('peNBitsInput').value);
-            const startTime = performance.now();
-            try {
-                const result = create_paired_entity(xValStr, nBits);
-                const endTime = performance.now();
-                log({ action: "CreatePairedEntity", inputs: { x: xValStr, n: nBits }, result: result, time_ms: (endTime - startTime).toFixed(3) });
-            } catch (e) {
-                logError("CreatePairedEntity", e);
-            }
+            runWasmOperation("CreatePairedEntity", create_paired_entity, xValStr, nBits);
         };
-        window.runIsMember = async () => {
-             if (!await initializeWasm()) return;
+        window.runIsMember = () => {
             const xValStr = document.getElementById('memberXValueInput').value;
             const nBits = parseInt(document.getElementById('memberNBitsInput').value);
-            const startTime = performance.now();
-            try {
-                const result = is_member(xValStr, nBits);
-                const endTime = performance.now();
-                log({ action: "IsMember", inputs: { x: xValStr, n: nBits }, result: result, time_ms: (endTime - startTime).toFixed(3) });
-            } catch (e) {
-                logError("IsMember", e);
-            }
+            runWasmOperation("IsMember", is_member, xValStr, nBits);
         };
-        window.runDecompose = async () => {
-            if (!await initializeWasm()) return;
+        window.runDecompose = async () => { // Needs to be async for await
             const xValStr = document.getElementById('decomposeXValueInput').value;
             const nBits = parseInt(document.getElementById('decomposeNBitsInput').value);
-            const startTime = performance.now();
-            try {
-                const wasm_result_array = decompose_to_base(xValStr, nBits);
-                const nativeJsArray = Array.from(wasm_result_array); 
-                const components = nativeJsArray.map(jsVal => (typeof jsVal === 'string') ? jsVal : (jsVal && typeof jsVal.as_string === 'function') ? jsVal.as_string() : String(jsVal));
-                const endTime = performance.now();
-                log({ action: "Decompose", inputs: { x: xValStr, n: nBits }, result: components, time_ms: (endTime - startTime).toFixed(3) });
-            } catch (e) {
-                logError("Decompose", e);
-            }
+            // decompose_to_base is synchronous from wasm-bindgen perspective
+            await runWasmOperation("Decompose", (x, n) => {
+                const wasm_array = decompose_to_base(x,n);
+                const nativeJsArray = Array.from(wasm_array);
+                return nativeJsArray.map(jsVal => (typeof jsVal === 'string') ? jsVal : (jsVal && typeof jsVal.as_string === 'function') ? jsVal.as_string() : String(jsVal));
+            }, xValStr, nBits);
         };
-        window.runCompose = async () => {
-            if (!await initializeWasm()) return;
+        window.runCompose = () => {
             const componentsStr = document.getElementById('composeComponentsInput').value;
             const componentsArr = componentsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
-            const startTime = performance.now();
-            try {
-                const result = compose_from_base(componentsArr); 
-                const endTime = performance.now();
-                log({ action: "Compose", inputs: { components: componentsArr }, result: result, time_ms: (endTime - startTime).toFixed(3) });
-            } catch (e) {
-                logError("Compose", e);
-            }
+            runWasmOperation("Compose", compose_from_base, componentsArr);
         };
-        window.runGenerateRandom = async () => {
-            if (!await initializeWasm()) return;
+        window.runGenerateRandom = () => {
             const nBits = parseInt(document.getElementById('randomNBitsInput').value);
             const seedOffset = parseInt(document.getElementById('randomSeedOffsetInput').value);
-            const startTime = performance.now();
-            try {
-                const result = generate_random_member(nBits, seedOffset);
-                const endTime = performance.now();
-                log({ action: "GenerateRandom", inputs: { n: nBits, seedOffset: seedOffset }, result: result, time_ms: (endTime - startTime).toFixed(3) });
-            } catch (e) {
-                logError("GenerateRandom", e);
-            }
+            runWasmOperation("GenerateRandom", generate_random_member, nBits, seedOffset);
         };
 
         window.runAutomatedTests = async () => {
             if (!await initializeWasm()) return;
-            log("Starting Automated Basic Test Suite...", "TestRunner");
+            displayMainResult("Automated Tests", "Running... check console for verbose logs, summary will appear here.", false);
+            verboseLog("Starting Automated Basic Test Suite...", "TestRunner");
 
             if (currentSBase !== "0,1,2" || currentNBase !== 3) {
                 document.getElementById('sBaseValuesInput').value = "0,1,2";
                 document.getElementById('nBaseBitsInput').value = 3;
-                await setupWasmPropagator(false); 
-                log("TestRunner: Propagator reset to S3={0,1,2}, N_base=3 for tests.", "TestRunner");
+                await setupWasmPropagatorInternal(true); 
+                verboseLog("Propagator reset to S3={0,1,2}, N_base=3 for tests.", "TestRunner");
             }
 
-            const tests = [
+            const tests = [ /* ... same test array as before ... */
                 { name: "PE_N3_X2", func: () => create_paired_entity("2", 3), expect: (r) => r.x === "2" && r.x_prime === "5" && r.n_bits === 3 },
                 { name: "PE_N6_X18", func: () => create_paired_entity("18", 6), expect: (r) => r.x === "18" && r.x_prime === "45" && r.n_bits === 6 },
                 { name: "PE_Error_TooLarge", func: () => create_paired_entity("8", 3), expectError: true },
-                
                 { name: "IsMember_S6_18_True", func: () => is_member("18", 6), expect: (r) => r === true },
                 { name: "IsMember_S6_19_False", func: () => is_member("19", 6), expect: (r) => r === false },
                 { name: "IsMember_S12_0_True", func: () => is_member("0", 12), expect: (r) => r === true },
                 { name: "IsMember_Error_InvalidN_60", func: () => is_member("0", 60), expectError: true }, 
                 { name: "IsMember_Error_TooLargeX", func: () => is_member("64", 6), expectError: true }, 
-                
                 { name: "Decompose_S6_18", func: () => decompose_to_base("18", 6), expect: (r_arr) => Array.from(r_arr).map(v=>v.toString()).join(',') === "2,2" },
                 { name: "Decompose_S12_0", func: () => decompose_to_base("0", 12), expect: (r_arr) => Array.from(r_arr).map(v=>v.toString()).join(',') === "0,0,0,0" },
                 { name: "Decompose_Error_NotMember", func: () => decompose_to_base("19", 6), expectError: true },
-
                 { name: "Compose_S6_From_[2,2]", func: () => compose_from_base(["2","2"]), expect: (r) => r.value === "18" && r.n_bits === 6 },
                 { name: "Compose_S12_From_[0,0,0,0]", func: () => compose_from_base(["0","0","0","0"]), expect: (r) => r.value === "0" && r.n_bits === 12 },
                 { name: "Compose_S12_From_[0,1,2,0]", func: () => compose_from_base(["0","1","2","0"]), expect: (r) => r.value === "80" && r.n_bits === 12 },
                 { name: "Compose_Error_InvalidComp", func: () => compose_from_base(["0","3"]), expectError: true }, 
                 { name: "Compose_Error_InvalidCount", func: () => compose_from_base(["0","1","2"]), expectError: true }, 
-
                 { name: "GenRandom_S6_Valid", func: async () => { const r_str = await generate_random_member(6, 10); return {randomVal: r_str, isMember: await is_member(r_str, 6)}; }, expect: (res) => res.isMember === true && !isNaN(parseInt(res.randomVal)) },
                 { name: "GenRandom_S12_Valid", func: async () => { const r_str = await generate_random_member(12, 11); return {randomVal: r_str, isMember: await is_member(r_str, 12)}; }, expect: (res) => res.isMember === true && !isNaN(parseInt(res.randomVal)) },
                 { name: "GenRandom_Error_InvalidN", func: () => generate_random_member(7,0), expectError: true },
             ];
-
             let testsPassed = 0;
             let testsFailed = 0;
+            const testSuiteStartTime = performance.now();
 
             for (const test of tests) {
-                log(`Running test: ${test.name}`, "TestRunner");
+                verboseLog(`Running test: ${test.name}`, "TestRunner");
                 const startTime = performance.now();
                 let result, errorOccurred = false, actualError = null;
                 try { result = await test.func(); } 
@@ -464,88 +373,100 @@
 
                 if (test.expectError) {
                     if (errorOccurred) {
-                        log({ status: "PASS", name: test.name, time_ms: time_ms, error_message: String(actualError).slice(0,150)+"..." }, "TestRunner");
+                        verboseLog({ status: "PASS", name: test.name, time_ms: time_ms, error_message: String(actualError).slice(0,150)+"..." }, "TestRunner");
                         testsPassed++;
                     } else {
-                        logError(`Expected error, but got success. Result: ${JSON.stringify(result)}`, test.name, "TestRunner");
+                        verboseLog(`FAIL: ${test.name} - Expected error, but got success. Result: ${JSON.stringify(result)}`, "TestRunner");
                         testsFailed++;
                     }
                 } else {
                     if (errorOccurred) {
-                        logError(`Expected success, but got error: ${String(actualError)}`, test.name, "TestRunner");
+                        verboseLog(`FAIL: ${test.name} - Expected success, but got error: ${String(actualError)}`, "TestRunner");
                         testsFailed++;
                     } else {
                         let assertionPassed = false;
                         try { assertionPassed = test.expect(result); } 
-                        catch (assertError) { logError(`Assertion function error: ${assertError}`, test.name, "TestRunner"); }
+                        catch (assertError) { verboseLog(`FAIL: ${test.name} - Assertion function error: ${assertError}`, "TestRunner"); }
 
                         if (assertionPassed) {
-                            log({ status: "PASS", name: test.name, time_ms: time_ms, result: result }, "TestRunner");
+                            verboseLog({ status: "PASS", name: test.name, time_ms: time_ms, result: result }, "TestRunner");
                             testsPassed++;
                         } else {
-                            logError(`Assertion failed. Expected different result. Got: ${JSON.stringify(result)}`, test.name, "TestRunner");
+                            verboseLog(`FAIL: ${test.name} - Assertion failed. Got: ${JSON.stringify(result)}`, "TestRunner");
                             testsFailed++;
                         }
                     }
                 }
             }
-            log(`Test Suite Finished: ${testsPassed} passed, ${testsFailed} failed.`, "TestRunner");
+            const testSuiteEndTime = performance.now();
+            const totalSuiteTime = (testSuiteEndTime - testSuiteStartTime).toFixed(3);
+            const summary = `Test Suite Finished: ${testsPassed} passed, ${testsFailed} failed in ${totalSuiteTime} ms.`;
+            verboseLog(summary, "TestRunner");
+            displayMainResult("Automated Tests", summary + (testsFailed > 0 ? " Check verbose log / console for details." : " All OK!"), testsFailed > 0);
         };
         
-        window.runPerformanceTest = async () => {
+        window.runPerformanceTest = async () => { /* ... same as before ... */
             if (!await initializeWasm()) return;
 
             const funcToTest = document.getElementById('perfTestFunction').value;
             const nValue = parseInt(document.getElementById('perfTestNValue').value);
-            let xValueStr = document.getElementById('perfTestXValue').value.trim(); // Get X value for relevant tests
+            let xValueStr = document.getElementById('perfTestXValue').value.trim(); 
             const iterations = parseInt(document.getElementById('perfTestIterations').value);
 
             if (isNaN(nValue) || isNaN(iterations) || iterations <= 0) {
-                logError("Invalid N value or iterations for performance test.", "PerfTest");
+                displayMainResult("Performance Test", "Invalid N value or iterations.", true);
+                verboseLog("Invalid N value or iterations for performance test.", "PerfTest");
                 return;
             }
-
-            log(`Starting Performance Test: ${funcToTest}, N=${nValue}, Iterations=${iterations}`, "PerfTest");
+            displayMainResult("Performance Test", `Running ${funcToTest} for N=${nValue}, ${iterations} iterations...`, false);
+            verboseLog(`Starting Performance Test: ${funcToTest}, N=${nValue}, Iterations=${iterations}`, "PerfTest");
+            
             let totalTime = 0;
             let operationSuccess = 0;
             let operationError = 0;
             let sampleArg1, sampleArg2; 
 
             try {
-                if (funcToTest === "is_member" || funcToTest === "decompose_to_base") {
-                    if (!xValueStr) { // If no X value provided, generate one
-                         log("PerfTest: No X value provided for is_member/decompose, generating a random one...", "PerfTest-Setup");
+                if (funcToTest === "is_member" || funcToTest === "decompose_to_base" || funcToTest === "create_paired_entity") {
+                    if (!xValueStr && (funcToTest === "is_member" || funcToTest === "decompose_to_base")) { 
+                         verboseLog("PerfTest: No X value provided for is_member/decompose, generating a random one...", "PerfTest-Setup");
                          xValueStr = await generate_random_member(nValue, Date.now() % 1000 + iterations); 
-                         log(`PerfTest: Generated X = ${xValueStr} for N=${nValue}`, "PerfTest-Setup");
+                         verboseLog(`PerfTest: Generated X = ${xValueStr} for N=${nValue}`, "PerfTest-Setup");
+                    } else if (!xValueStr && funcToTest === "create_paired_entity") {
+                        xValueStr = "0"; // Default for PE if not provided
+                        verboseLog(`PerfTest: No X value for create_paired_entity, using "0".`, "PerfTest-Setup");
                     }
                     sampleArg1 = xValueStr;
                     sampleArg2 = nValue;
                 } else if (funcToTest === "compose_from_base") {
                     const numLevelsRecursion = Math.log2(nValue / currentNBase);
                     if (isNaN(numLevelsRecursion) || !Number.isInteger(numLevelsRecursion) || numLevelsRecursion < 0) {
-                         logError(`Cannot determine base components for N=${nValue} from N_base=${currentNBase}`, "PerfTest-Setup"); return;
+                         const errText = `Cannot determine base components for N=${nValue} from N_base=${currentNBase}`;
+                         displayMainResult("Performance Test", errText, true);
+                         verboseLog(errText, "PerfTest-Setup"); return;
                     }
                     const numBaseComponents = Math.pow(2, numLevelsRecursion);
                     const sBaseArray = currentSBase.split(',').map(s => s.trim());
-                    if (sBaseArray.length === 0) {logError(`S_Base is empty for compose test.`, "PerfTest-Setup"); return;}
+                    if (sBaseArray.length === 0) {
+                        const errText = `S_Base is empty for compose test.`;
+                        displayMainResult("Performance Test", errText, true);
+                        verboseLog(errText, "PerfTest-Setup"); return;
+                    }
                     let tempSampleArg1 = [];
                     for(let i=0; i<numBaseComponents; i++) tempSampleArg1.push(sBaseArray[i % sBaseArray.length]); 
-                    sampleArg1 = tempSampleArg1; // Native JS array of strings
+                    sampleArg1 = tempSampleArg1; 
                 } else if (funcToTest === "generate_random_member") {
                     sampleArg1 = nValue; 
-                    sampleArg2 = 0; // initial seed_offset, will be varied in loop
-                } else if (funcToTest === "create_paired_entity") {
-                    if (!xValueStr) {
-                        log("PerfTest: No X value provided for create_paired_entity, using '0'.", "PerfTest-Setup");
-                        xValueStr = "0";
-                    }
-                    sampleArg1 = xValueStr;
-                    sampleArg2 = nValue;
+                    sampleArg2 = 0; 
                 } else {
-                     logError(`Unknown function for performance test: ${funcToTest}`, "PerfTest-Setup"); return;
+                     const errText = `Unknown function for performance test: ${funcToTest}`;
+                     displayMainResult("Performance Test", errText, true);
+                     verboseLog(errText, "PerfTest-Setup"); return;
                 }
             } catch (e) {
-                 logError(`Error preparing args for ${funcToTest}: ${e}`, "PerfTest-Setup"); return;
+                 const errText = `Error preparing args for ${funcToTest}: ${e}`;
+                 displayMainResult("Performance Test", errText, true);
+                 verboseLog(errText, "PerfTest-Setup"); return;
             }
 
             const overallStartTime = performance.now();
@@ -556,65 +477,67 @@
                         case "is_member": is_member(sampleArg1, sampleArg2); break;
                         case "decompose_to_base": decompose_to_base(sampleArg1, sampleArg2); break;
                         case "compose_from_base": compose_from_base(sampleArg1); break; 
-                        case "generate_random_member": generate_random_member(sampleArg1, i); break; 
+                        case "generate_random_member": generate_random_member(sampleArg1, i + seedOffsetForPerfTest); break; 
                         case "create_paired_entity": create_paired_entity(sampleArg1, sampleArg2); break;
                     }
                     operationSuccess++;
                 } catch (e) {
                     operationError++;
-                    if (i < 3 && iterations > 10) logError(`PerfTest iter ${i} error`, e, funcToTest); 
+                    if (i < 3 && iterations > 10) verboseLog(`PerfTest iter ${i} error: ${e}`, funcToTest); 
                 }
                 const iterEndTime = performance.now();
                 totalTime += (iterEndTime - iterStartTime);
             }
             const overallEndTime = performance.now();
-
-            log({
+            const perfResults = {
                 action: `PerformanceTest[${funcToTest}]`,
-                inputs: { N: nValue, X_val_used: (funcToTest !== "compose_from_base" && funcToTest !== "generate_random_member") ? sampleArg1 : "N/A (generated or array)", iterations: iterations },
+                inputs: { N: nValue, X_val_used: (funcToTest !== "compose_from_base" && funcToTest !== "generate_random_member") ? sampleArg1 : "N/A", iterations: iterations },
                 total_js_loop_time_ms: (overallEndTime - overallStartTime).toFixed(3),
                 total_wasm_calls_time_ms: totalTime.toFixed(3),
                 avg_wasm_call_time_ms: (iterations > 0 ? totalTime / iterations : 0).toFixed(5),
                 successes: operationSuccess,
                 errors: operationError
-            }, "PerfTest");
+            };
+            displayMainResult("Performance Test", perfResults, false);
+            verboseLog(perfResults, "PerfTest");
         };
+        let seedOffsetForPerfTest = 0; // To vary seed for generate_random_member in perf test
         
-        window.drawS6Visualization = async () => {
+        window.drawS6Visualization = async () => { /* ... same as before ... */
             if (!await initializeWasm()) return;
 
             if (currentSBase !== "0,1,2" || currentNBase !== 3) {
-                logError("S6 Visualization currently only supports S_base={0,1,2} and N_base=3. Please set propagator first.", "S6Viz");
+                displayMainResult("S6 Visualization", "Currently only supports S_base={0,1,2} and N_base=3.", true);
+                verboseLog("S6 Visualization requires S_base={0,1,2} and N_base=3.", "S6Viz");
                 return;
             }
 
             const canvas = document.getElementById('s6Canvas');
             const ctx = canvas.getContext('2d');
-            const s3Values = [0, 1, 2]; // Our S_base values
+            const s3Values = [0, 1, 2]; 
             const s6Members = []; 
 
             for (const h_upper of s3Values) {
                 for (const h_lower of s3Values) {
                     try {
-                        // compose_from_base expects an array of strings
                         const composed = compose_from_base([String(h_upper), String(h_lower)]);
-                        if (composed && composed.value && composed.n_bits === 6) {
+                        if (composed && typeof composed.value === 'string' && typeof composed.n_bits === 'number' && composed.n_bits === 6) {
                              s6Members.push({ x_val: parseInt(composed.value), h_upper: h_upper, h_lower: h_lower });
                         } else {
-                            logError(`Unexpected compose result for (${h_upper},${h_lower})`, composed, "S6Viz-Setup");
+                            verboseLog(`Unexpected compose result for (${h_upper},${h_lower}): ${JSON.stringify(composed)}`, "S6Viz-Setup");
                         }
                     } catch (e) {
-                        logError(`Error composing S6 member for (${h_upper},${h_lower})`, e, "S6Viz-Setup");
+                        verboseLog(`Error composing S6 member for (${h_upper},${h_lower}): ${e}`, "S6Viz-Setup");
                     }
                 }
             }
 
             if (s6Members.length !== 9) {
-                logError(`Expected 9 S6 members for S3={0,1,2}, but generated ${s6Members.length}. Cannot plot accurately. Check S_base setup.`, "S6Viz");
-                //return; // Or proceed to plot what was generated
+                displayMainResult("S6 Visualization", `Expected 9 S6 members, but generated ${s6Members.length}. Plot may be inaccurate.`, true);
+                verboseLog(`Expected 9 S6 members for S3={0,1,2}, but generated ${s6Members.length}.`, "S6Viz");
             }
 
-            const gridSize = 3; // For a 3x3 grid based on S3 components
+            const gridSize = 3; 
             const cellPadding = 40;
             const cellSize = (canvas.width - 2 * cellPadding) / gridSize;
             const radius = Math.min(20, cellSize / 3); 
@@ -624,10 +547,10 @@
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            log(`Plotting ${s6Members.length} S6 members.`, "S6Viz");
+            verboseLog(`Plotting ${s6Members.length} S6 members.`, "S6Viz");
 
-            // Draw grid lines (optional)
-            ctx.strokeStyle = "#e0e0e0";
+            ctx.strokeStyle = "#e0e0e0"; // Grid line color
+            ctx.lineWidth = 0.5;
             for(let i = 0; i <= gridSize; i++) {
                 ctx.beginPath();
                 ctx.moveTo(cellPadding + i * cellSize, cellPadding);
@@ -639,9 +562,7 @@
                 ctx.stroke();
             }
 
-
             s6Members.forEach(member => {
-                // Map h_upper, h_lower (0,1,2) to grid cell centers
                 const x = cellPadding + (member.h_upper * cellSize) + cellSize / 2;
                 const y = cellPadding + (member.h_lower * cellSize) + cellSize / 2;
 
@@ -649,21 +570,39 @@
                 ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
                 
                 const sumComps = member.h_upper + member.h_lower;
-                if (sumComps <= 1) ctx.fillStyle = 'rgba(173, 216, 230, 0.7)'; // Lightblue
-                else if (sumComps <= 3) ctx.fillStyle = 'rgba(144, 238, 144, 0.7)'; // Lightgreen
-                else ctx.fillStyle = 'rgba(240, 128, 128, 0.7)'; // Lightcoral
+                if (sumComps <= 1) ctx.fillStyle = 'rgba(173, 216, 230, 0.8)'; 
+                else if (sumComps <= 3) ctx.fillStyle = 'rgba(144, 238, 144, 0.8)'; 
+                else ctx.fillStyle = 'rgba(240, 128, 128, 0.8)'; 
                 ctx.fill();
                 
-                ctx.strokeStyle = '#555'; // Darker border for points
+                ctx.strokeStyle = '#555'; 
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                ctx.fillStyle = '#000'; // Text color
-                ctx.fillText(String(member.x_val), x, y); // Label with X_S6 value
-                // Optional: label with (H_upper, H_lower)
-                // ctx.fillText(`(${member.h_upper},${member.h_lower})`, x, y + radius + 10);
+                ctx.fillStyle = '#000'; 
+                ctx.fillText(String(member.x_val), x, y); 
             });
-             ctx.lineWidth = 1; // Reset line width
+             ctx.lineWidth = 1; 
+             displayMainResult("S6 Visualization", `Plotted ${s6Members.length} S6 members.`, false);
+        };
+
+        // Log controls
+        window.toggleFullLog = () => {
+            fullOutputLog.style.display = (fullOutputLog.style.display === 'none' || fullOutputLog.style.display === '') ? 'block' : 'none';
+            if (fullOutputLog.style.display === 'block') {
+                fullOutputLog.scrollTop = fullOutputLog.scrollHeight;
+            }
+        };
+        window.exportFullLog = () => {
+            const blob = new Blob([fullOutputLog.value], { type: 'text/plain' });
+            const anchor = document.createElement('a');
+            anchor.download = 'paired_binary_log.txt';
+            anchor.href = URL.createObjectURL(blob);
+            anchor.click();
+            URL.revokeObjectURL(anchor.href);
+        };
+        window.clearFullLog = () => {
+            fullOutputLog.value = '';
         };
 
         initializeWasm();
