@@ -54,19 +54,18 @@
         
         #evolutionSvgContainer { 
             text-align: center; 
-            overflow: hidden; /* Important for controlling pan boundaries */
-            width: 600px; /* Fixed size for the container */
+            overflow: hidden; 
+            width: 600px; 
             height: 400px; 
             margin: 15px auto; 
             border: 1px solid var(--border-color); 
-            cursor: grab; /* Initial cursor for panning */
-            position: relative; /* For absolute positioning of SVG if needed, or just for structure */
-            background-color: #2c3e50; /* Dark background for plot */
+            cursor: grab; 
+            position: relative; 
+            background-color: #2c3e50; 
             border-radius: 4px;
         }
         #evolutionSvg { 
-            display: block; /* SVG is inline by default, block helps with layout */
-            /* width and height are set on the SVG element itself via attributes */
+            display: block; 
         }
         .evolution-controls { text-align:center; margin-bottom:15px; }
         .evolution-controls label, .evolution-controls input, .evolution-controls button {
@@ -76,7 +75,6 @@
         }
         .evolution-controls input[type="number"] { width: 70px; padding: 8px; font-size:0.9em;}
         .evolution-controls button { width: auto; padding: 8px 15px; font-size:0.9em; }
-
 
         button {
             background-color: var(--primary-color); color: white;
@@ -88,11 +86,10 @@
         button:hover { background-color: var(--primary-dark); transform: translateY(-1px); }
         button:active { background-color: var(--primary-darker); transform: translateY(0px); }
         button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: translateY(0); opacity: 0.7; }
-        button.secondary-action { background-color: #78909c; /* Blue Grey */ }
+        button.secondary-action { background-color: #78909c; }
         button.secondary-action:hover { background-color: #607d8b; }
-        button.test-suite-button { background-color: var(--accent-color); } /* Green Accent */
+        button.test-suite-button { background-color: var(--accent-color); }
         button.test-suite-button:hover { background-color: var(--accent-dark); }
-
 
         details {
             background-color: #f8f9fa; border: 1px solid var(--border-color);
@@ -100,7 +97,7 @@
         }
         summary {
             font-weight: 600; font-size: 1.25em; color: var(--primary-dark);
-            padding: 15px 20px; cursor: pointer; background-color: #eef2f7; /* Lighter Indigo */
+            padding: 15px 20px; cursor: pointer; background-color: #eef2f7; 
             border-radius: 6px; transition: background-color 0.2s ease;
             list-style-position: inside; 
         }
@@ -151,7 +148,7 @@
                 <label for="evoNLevel">N-Level:</label>
                 <input type="number" id="evoNLevel" value="12" min="6" step="3"> 
                 <label for="evoMaxPoints">Max Points:</label>
-                <input type="number" id="evoMaxPoints" value="100" min="10"> <!-- Reduced default for performance -->
+                <input type="number" id="evoMaxPoints" value="100" min="10">
                 <br>
                 <label for="evoSpeed">Speed (ms/dot):</label>
                 <input type="number" id="evoSpeed" value="200" min="10" style="width:70px;">
@@ -270,9 +267,11 @@
     </div>
 
     <script type="module">
+        // These will be assigned after WASM is loaded
         let setup_propagator_wasm, is_member_wasm, decompose_to_base_wasm, compose_from_base_wasm,
             generate_random_member_wasm, create_paired_entity_wasm;
 
+        // Import and assign to global lexical variables
         import init, * as wasm_exports from './pkg/paired_binary.js';
 
         const mainOutputArea = document.getElementById('mainOutputArea');
@@ -286,7 +285,7 @@
         let wasmInitialized = false;
         let currentSBaseForDisplay = "0,1,2"; 
         let currentNBaseForDisplay = 3;
-        let isBenchmarking = false; // For depth test and manual perf test
+        let isBenchmarking = false; 
         
         let evolutionAnimationId = null;
         let evolutionPoints = [];
@@ -344,11 +343,13 @@
                     verboseLog(`Error setting up default propagator: ${errorStr}`, "System");
                     displayMain(`Error setting up default propagator: ${errorStr}`, "error");
                 }
-                document.getElementById('stopEvoButton').disabled = true; 
+                // Ensure buttons are correctly enabled/disabled after WASM load
+                if (document.getElementById('stopEvoButton')) document.getElementById('stopEvoButton').disabled = true;
+                if (document.getElementById('playPauseEvoButton')) document.getElementById('playPauseEvoButton').textContent = 'Play';
+                if (document.getElementById('stepEvoButton')) document.getElementById('stepEvoButton').disabled = false;
+                
                 applyEvoViewTransform(); 
-                evolutionSvgElement.style.cursor = 'grab';
-                document.getElementById('playPauseEvoButton').textContent = 'Play';
-                document.getElementById('stepEvoButton').disabled = false;
+                if (evolutionSvgElement) evolutionSvgElement.style.cursor = 'grab'; // Set only if element exists
 
                 return true;
             } catch (e) {
@@ -371,10 +372,8 @@
                 setup_propagator_wasm(sBaseValuesStr, nBaseBits);
                 displayMain(`Propagator initialized/updated: S_base='${sBaseValuesStr}', N_base=${nBaseBits}`, "ok");
                 verboseLog(`Propagator user-updated: S_base='${sBaseValuesStr}', N_base=${nBaseBits}`, "Setup");
-                // Update evoPlotSettings cache if propagator changes
                 evoPlotSettings.sBaseCache = currentSBaseForDisplay.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n));
                 evoPlotSettings.nBaseCache = currentNBaseForDisplay;
-
             } catch (e) {
                 const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e);
                 displayMain(`Setup Propagator Error: ${errorStr}`, "error");
@@ -431,7 +430,7 @@
             runWasmOpForDisplay("GenerateRandom", generate_random_member_wasm, n, seed);
         };
 
-        window.runAutomatedTests = async () => { /* ... same test logic, uses X_wasm functions ... */ 
+        window.runAutomatedTests = async () => {
             if (!await initializeWasm()) return;
             displayMain("Automated Tests", "Running... Check verbose log for details.", "info");
             verboseLog("Starting Automated Basic Test Suite...", "TestRunner");
@@ -443,11 +442,11 @@
                 { name: "Decompose_S6_18", func: () => decompose_to_base_wasm("18", 6), expect: (r_arr) => Array.from(r_arr).map(jsValToString).join(',') === "2,2" },
                 { name: "Compose_S6_From_[2,2]", func: () => compose_from_base_wasm(["2","2"]), expect: (r) => r.value === "18" && r.n_bits === 6 },
                 { name: "GenRandom_S6_Valid", func: async () => { const r_str = await generate_random_member_wasm(6, 10); return {randomVal: r_str, isMember: await is_member_wasm(r_str, 6)}; }, expect: (res) => res.isMember === true && !isNaN(parseInt(res.randomVal)) },
-            ]; // Shortened for brevity, ensure all previous tests are here
+            ];
             let testsPassed = 0; let testsFailed = 0;
             const suiteStartTime = performance.now();
-            for (const test of tests) { /* ... (same execution logic, use verboseLog) ... */
-                 verboseLog(`Running test: ${test.name}`, "TestRunner");
+            for (const test of tests) {
+                verboseLog(`Running test: ${test.name}`, "TestRunner");
                 let result, errorOccurred = false, actualError = null;
                 try { result = await test.func(); } 
                 catch (e) { errorOccurred = true; actualError = e; }
@@ -471,7 +470,7 @@
             verboseLog(summary, "TestRunner");
         };
         
-        window.runDepthTest = async () => { /* ... same as previous, ensure X_wasm functions ... */ 
+        window.runDepthTest = async () => {
             if (!await initializeWasm()) return;
             if (isBenchmarking) { displayMain("Depth Test", "Benchmark already in progress.", "info"); return; }
             isBenchmarking = true;
@@ -482,9 +481,15 @@
 
             const requiredSBase = "0,1,2"; const requiredNBase = 3;
             if (currentSBaseForDisplay !== requiredSBase || currentNBaseForDisplay !== requiredNBase) {
-                try { setup_propagator_wasm(requiredSBase, requiredNBase); currentSBaseForDisplay = requiredSBase; currentNBaseForDisplay = requiredNBase;
+                try { 
+                    setup_propagator_wasm(requiredSBase, requiredNBase); 
+                    currentSBaseForDisplay = requiredSBase; currentNBaseForDisplay = requiredNBase;
                     verboseLog(`Propagator reset to S_base=${requiredSBase}, N_base=${requiredNBase} for depth test.`, "DepthTest-Setup");
-                } catch(e) { benchmarkResultArea.innerHTML = `<p>Error setting up S3={0,1,2} for test: ${e}</p>`; isBenchmarking = false; depthTestButton.disabled = false; depthTestButton.textContent = "Run Max N Depth Test"; return;}
+                } catch(e) { 
+                    const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e);
+                    benchmarkResultArea.innerHTML = `<p class="status-panel status-error">Error setting up S3={0,1,2} for test: ${errorStr}</p>`; 
+                    isBenchmarking = false; depthTestButton.disabled = false; depthTestButton.textContent = "Run Max N Depth Test"; return;
+                }
             }
 
             const timeLimitMs = parseInt(document.getElementById('depthTestTimeLimit').value) || 500;
@@ -521,7 +526,7 @@
             isBenchmarking = false; depthTestButton.disabled = false; depthTestButton.textContent = "Run Max N Depth Test";
         };
         
-        window.runPerformanceTest = async () => { /* ... same as previous, ensure X_wasm functions ... */
+        window.runPerformanceTest = async () => {
             if (!await initializeWasm()) return;
             const funcToTest = document.getElementById('perfTestFunction').value;
             const nValue = parseInt(document.getElementById('perfTestNValue').value);
@@ -588,25 +593,20 @@
             verboseLog(perfResults, "PerfTest");
         };
         
-        // --- Generative Evolution Plot (with Paired Entity visualization) ---
         function mapSBaseComponentsToXY(sBaseComponentsStrs, nBaseBits, svgWidth, svgHeight) {
             const sBaseValues = evoPlotSettings.sBaseCache;
             if (sBaseValues.length === 0) return { x: svgWidth / 2, y: svgHeight / 2 };
-
             const minSBase = Math.min(...sBaseValues);
             const maxSBase = Math.max(...sBaseValues);
             const rangeSBase = (maxSBase - minSBase) || 1; 
-
             let xNorm = 0.5, yNorm = 0.5; 
-            const sBaseComponents = sBaseComponentsStrs.map(s => parseInt(s.trim())); // Ensure components are numbers
-
+            const sBaseComponents = sBaseComponentsStrs.map(s => parseInt(s.trim()));
 
             if (sBaseComponents.length === 4) { 
                 const a = sBaseComponents[0], b = sBaseComponents[1], c = sBaseComponents[2], d = sBaseComponents[3];
                 const aN = (a - minSBase) / rangeSBase; const bN = (b - minSBase) / rangeSBase;
                 const cN = (c - minSBase) / rangeSBase; const dN = (d - minSBase) / rangeSBase;
-                xNorm = (aN * 0.6 + cN * 0.4); 
-                yNorm = (bN * 0.6 + dN * 0.4);
+                xNorm = (aN * 0.6 + cN * 0.4); yNorm = (bN * 0.6 + dN * 0.4);
             } else if (sBaseComponents.length === 2) { 
                 const a = sBaseComponents[0], b = sBaseComponents[1];
                 xNorm = (a - minSBase) / rangeSBase; yNorm = (b - minSBase) / rangeSBase;
@@ -616,70 +616,43 @@
                     const valN = (sBaseComponents[i] - minSBase) / rangeSBase;
                     if (i % 2 === 0) { sumX += valN; countX++; } else { sumY += valN; countY++; }
                 }
-                xNorm = countX > 0 ? (sumX / countX) : 0.5;
-                yNorm = countY > 0 ? (sumY / countY) : 0.5;
+                xNorm = countX > 0 ? (sumX / countX) : 0.5; yNorm = countY > 0 ? (sumY / countY) : 0.5;
             }
-            
-            xNorm = Math.max(0, Math.min(1, xNorm));
-            yNorm = Math.max(0, Math.min(1, yNorm));
-
+            xNorm = Math.max(0, Math.min(1, xNorm)); yNorm = Math.max(0, Math.min(1, yNorm));
             const padding = 30;
-            return {
-                x: padding + xNorm * (svgWidth - 2 * padding),
-                y: padding + yNorm * (svgHeight - 2 * padding)
-            };
+            return { x: padding + xNorm * (svgWidth - 2 * padding), y: padding + yNorm * (svgHeight - 2 * padding) };
         }
 
         function updateEvolutionPlot() {
             if (!evoPlotSettings.isRunning || !wasmInitialized) return;
-
             try {
                 const currentNLevel = evoPlotSettings.nLevel;
                 const randomXStr = generate_random_member_wasm(currentNLevel, Date.now() % 1000 + evolutionPoints.length + Math.random()*100);
-                
                 const pe_obj = create_paired_entity_wasm(randomXStr, currentNLevel);
-                const xValForPlotStr = pe_obj.x; 
-                const xPrimeValStr = pe_obj.x_prime;
-
+                const xValForPlotStr = pe_obj.x; const xPrimeValStr = pe_obj.x_prime;
                 const wasmDecompArrayX = decompose_to_base_wasm(xValForPlotStr, currentNLevel);
                 const sBaseComponentsX = Array.from(wasmDecompArrayX).map(jsValToString);
-
                 const svgWidth = parseInt(evolutionSvgElement.getAttribute('width'));
                 const svgHeight = parseInt(evolutionSvgElement.getAttribute('height'));
-                
                 const coordsX = mapSBaseComponentsToXY(sBaseComponentsX, evoPlotSettings.nBaseCache, svgWidth, svgHeight);
-
                 const offsetAmount = Math.max(5 / evoZoomLevel, 10 / evoZoomLevel); 
-                const angle = Math.random() * 2 * Math.PI; // Random angle for X' offset
-                const coordsXPrime = { 
-                    x: coordsX.x + offsetAmount * Math.cos(angle), 
-                    y: coordsX.y + offsetAmount * Math.sin(angle)
-                };
-                
+                const angle = Math.random() * 2 * Math.PI; 
+                const coordsXPrime = { x: coordsX.x + offsetAmount * Math.cos(angle), y: coordsX.y + offsetAmount * Math.sin(angle) };
                 evolutionPoints.push({ 
-                    x_coord: coordsX.x, y_coord: coordsX.y,
-                    xp_coord: { x: coordsXPrime.x, y: coordsXPrime.y },
-                    age: 0, x_val_str: xValForPlotStr, xp_val_str: xPrimeValStr, 
-                    s_base_X: sBaseComponentsX,
+                    x_coord: coordsX.x, y_coord: coordsX.y, xp_coord: coordsXPrime, age: 0, 
+                    x_val_str: xValForPlotStr, xp_val_str: xPrimeValStr, s_base_X: sBaseComponentsX,
                 });
-
                 if (evolutionPoints.length > evoPlotSettings.maxPoints) evolutionPoints.shift(); 
-
                 evoPlotMasterGroup.innerHTML = ''; 
-
                 evolutionPoints.forEach((p, index) => {
                     p.age++;
                     const maxAgeEffect = Math.max(50, evoPlotSettings.maxPoints * 0.8); 
                     const relativeAge = Math.min(p.age / maxAgeEffect, 1.0); 
-                    const opacity = 0.95 - (relativeAge * 0.75); // Make trails fade more
-                    
-                    let baseRadius = 4 * (1 - relativeAge * 0.6); // Smaller base radius
-                    baseRadius = Math.max(1.0, baseRadius);
+                    const opacity = 0.95 - (relativeAge * 0.75); 
+                    let baseRadius = 4 * (1 - relativeAge * 0.6); baseRadius = Math.max(1.0, baseRadius);
                     const radius = Math.max(0.5 / evoZoomLevel, baseRadius / evoZoomLevel);
-
                     let baseStrokeWidth = (index === evolutionPoints.length - 1) ? 1.2 : 0.4;
                     const strokeWidth = Math.max(0.1 / evoZoomLevel, baseStrokeWidth / evoZoomLevel);
-
                     const line = document.createElementNS(SVG_NS, 'line');
                     line.setAttribute('x1', p.x_coord); line.setAttribute('y1', p.y_coord);
                     line.setAttribute('x2', p.xp_coord.x); line.setAttribute('y2', p.xp_coord.y);
@@ -687,48 +660,39 @@
                     line.setAttribute('stroke', `hsla(${lineHue}, 60%, 55%, ${opacity * 0.4})`); 
                     line.setAttribute('stroke-width', Math.max(0.1 / evoZoomLevel, 0.4 / evoZoomLevel));
                     evoPlotMasterGroup.appendChild(line);
-
                     const circleX = document.createElementNS(SVG_NS, 'circle');
                     circleX.setAttribute('cx', p.x_coord); circleX.setAttribute('cy', p.y_coord);
                     circleX.setAttribute('r', radius);
                     let hueSourceX = p.s_base_X.length > 0 ? parseInt(p.s_base_X[0]) : 0;
                     const hueX = (hueSourceX * 70 + 0) % 360; 
-                    const saturationX = 90 - (relativeAge * 50);
-                    const lightnessX = 60 - (relativeAge * 30);
+                    const saturationX = 90 - (relativeAge * 50); const lightnessX = 60 - (relativeAge * 30);
                     circleX.setAttribute('fill', `hsla(${hueX}, ${saturationX}%, ${lightnessX}%, ${opacity})`);
                     circleX.setAttribute('stroke', (index === evolutionPoints.length - 1) ? '#f0f0f0' : `hsla(${hueX}, ${saturationX-15}%, ${lightnessX-15}%, ${opacity*0.7})`);
                     circleX.setAttribute('stroke-width', strokeWidth);
                     evoPlotMasterGroup.appendChild(circleX);
-
                     const circleXPrime = document.createElementNS(SVG_NS, 'circle');
                     circleXPrime.setAttribute('cx', p.xp_coord.x); circleXPrime.setAttribute('cy', p.xp_coord.y);
                     circleXPrime.setAttribute('r', radius * 0.75); 
                     const hueXPrime = (hueX + 180) % 360; 
-                    const saturationXP = 75 - (relativeAge * 45); 
-                    const lightnessXP = 55 - (relativeAge * 25);
+                    const saturationXP = 75 - (relativeAge * 45); const lightnessXP = 55 - (relativeAge * 25);
                     circleXPrime.setAttribute('fill', `hsla(${hueXPrime}, ${saturationXP}%, ${lightnessXP}%, ${opacity * 0.85})`);
                     circleXPrime.setAttribute('stroke', (index === evolutionPoints.length - 1) ? '#dddddd' : `hsla(${hueXPrime}, ${saturationXP-15}%, ${lightnessXP-15}%, ${opacity*0.65})`);
                     circleXPrime.setAttribute('stroke-width', strokeWidth * 0.75);
                     evoPlotMasterGroup.appendChild(circleXPrime);
                 });
-
-            } catch (e) {
-                const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e);
-                verboseLog(`Error during evolution step: ${errorStr}`, "EvolutionPlot");
-            }
-
-            if (evoPlotSettings.isRunning) {
-                evolutionAnimationId = setTimeout(updateEvolutionPlot, evoPlotSettings.currentSpeed);
-            }
+            } catch (e) { const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e); verboseLog(`Error during evolution step: ${errorStr}`, "EvolutionPlot");}
+            if (evoPlotSettings.isRunning) evolutionAnimationId = setTimeout(updateEvolutionPlot, evoPlotSettings.currentSpeed);
         }
         
-        window.toggleEvolutionPlot = async () => { /* ... same as before ... */ 
+        window.toggleEvolutionPlot = async () => { 
              if (!await initializeWasm()) return;
+            const playPauseButton = document.getElementById('playPauseEvoButton');
+            const stepButton = document.getElementById('stepEvoButton');
             if (evoPlotSettings.isRunning) { 
                 evoPlotSettings.isRunning = false;
                 if (evolutionAnimationId) clearTimeout(evolutionAnimationId);
-                document.getElementById('playPauseEvoButton').textContent = 'Play';
-                document.getElementById('stepEvoButton').disabled = false;
+                playPauseButton.textContent = 'Play';
+                stepButton.disabled = false;
                 verboseLog("Evolution plot paused.", "EvolutionPlot");
                 displayMain("Evolution Plot", "Paused.", "info");
             } else { 
@@ -736,29 +700,25 @@
                 evoPlotSettings.maxPoints = parseInt(document.getElementById('evoMaxPoints').value) || 100;
                 evoPlotSettings.speed = parseInt(document.getElementById('evoSpeed').value) || 200;
                 evoPlotSettings.currentSpeed = evoPlotSettings.speed / evoPlotSettings.speedMultiplier;
-
                 const sBaseValuesStr = document.getElementById('sBaseValuesInput').value;
                 const nBaseBits = parseInt(document.getElementById('nBaseBitsInput').value);
                 if (currentSBaseForDisplay !== sBaseValuesStr || currentNBaseForDisplay !== nBaseBits) {
                     displayMain("Evolution Plot Info", "Propagator settings changed. Re-initializing for plot.", "info");
-                    try {
-                        setup_propagator_wasm(sBaseValuesStr, nBaseBits);
-                        currentSBaseForDisplay = sBaseValuesStr; currentNBaseForDisplay = nBaseBits;
-                    } catch(e) { displayMain("Evolution Plot Error", "Could not set propagator.", "error"); return; }
+                    try { setup_propagator_wasm(sBaseValuesStr, nBaseBits); currentSBaseForDisplay = sBaseValuesStr; currentNBaseForDisplay = nBaseBits; } 
+                    catch(e) { displayMain("Evolution Plot Error", "Could not set propagator.", "error"); return; }
                 }
                 evoPlotSettings.sBaseCache = currentSBaseForDisplay.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n));
                 evoPlotSettings.nBaseCache = currentNBaseForDisplay;
                 if (evoPlotSettings.sBaseCache.length === 0) { displayMain("Evolution Plot Error", "S_base values invalid.", "error"); return;}
-
                 evoPlotSettings.isRunning = true;
-                document.getElementById('playPauseEvoButton').textContent = 'Pause';
-                document.getElementById('stepEvoButton').disabled = true;
+                playPauseButton.textContent = 'Pause';
+                stepButton.disabled = true;
                 verboseLog(`Evolution plot started/resumed: N=${evoPlotSettings.nLevel}, MaxPts=${evoPlotSettings.maxPoints}, Speed=${evoPlotSettings.currentSpeed}ms`, "EvolutionPlot");
                 displayMain("Evolution Plot", `Running for N=${evoPlotSettings.nLevel}...`, "info");
                 updateEvolutionPlot();
             }
         };
-        window.stepForwardEvolution = async () => { /* ... same as before ... */
+        window.stepForwardEvolution = async () => {
             if (!await initializeWasm()) return;
             if (evoPlotSettings.isRunning) toggleEvolutionPlot(); 
             evoPlotSettings.nLevel = parseInt(document.getElementById('evoNLevel').value) || 12;
@@ -773,83 +733,90 @@
             verboseLog("Stepping forward evolution plot.", "EvolutionPlot");
             updateEvolutionPlot(); 
          };
-        window.increaseEvolutionSpeed = () => { /* ... same as before ... */ 
+        window.increaseEvolutionSpeed = () => { 
             evoPlotSettings.speedMultiplier *= 2;
             if (evoPlotSettings.speedMultiplier > 16) evoPlotSettings.speedMultiplier = 16;
             evoPlotSettings.currentSpeed = Math.max(10, evoPlotSettings.speed / evoPlotSettings.speedMultiplier);
             displayMain("Evolution Plot", `Speed: ${evoPlotSettings.speedMultiplier}x (Interval: ${evoPlotSettings.currentSpeed.toFixed(0)}ms)`, "info");
             verboseLog(`Evolution speed increased to ${evoPlotSettings.speedMultiplier}x`, "EvolutionPlot");
         };
-        window.decreaseEvolutionSpeed = () => { /* ... same as before ... */ 
+        window.decreaseEvolutionSpeed = () => { 
             evoPlotSettings.speedMultiplier /= 2;
             if (evoPlotSettings.speedMultiplier < 0.125) evoPlotSettings.speedMultiplier = 0.125; 
             evoPlotSettings.currentSpeed = evoPlotSettings.speed / evoPlotSettings.speedMultiplier;
             displayMain("Evolution Plot", `Speed: ${evoPlotSettings.speedMultiplier}x (Interval: ${evoPlotSettings.currentSpeed.toFixed(0)}ms)`, "info");
             verboseLog(`Evolution speed decreased to ${evoPlotSettings.speedMultiplier}x`, "EvolutionPlot");
         };
-        window.clearEvolutionPlot = () => { /* ... same as before ... */ 
+        window.clearEvolutionPlot = () => { 
             if (evoPlotSettings.isRunning) toggleEvolutionPlot(); 
             evolutionPoints = [];
-            evoPlotMasterGroup.innerHTML = ''; 
+            if(evoPlotMasterGroup) evoPlotMasterGroup.innerHTML = ''; 
             evoViewBox = { x: 0, y: 0, width: 600, height: 400 }; 
             evoZoomLevel = 1;
             applyEvoViewTransform();
             verboseLog("Evolution plot cleared and view reset.", "EvolutionPlot");
             displayMain("Evolution Plot", "Cleared and view reset.", "info");
-            document.getElementById('playPauseEvoButton').textContent = 'Play';
-            document.getElementById('stepEvoButton').disabled = false;
+            if(document.getElementById('playPauseEvoButton')) document.getElementById('playPauseEvoButton').textContent = 'Play';
+            if(document.getElementById('stepEvoButton')) document.getElementById('stepEvoButton').disabled = false;
         };
         
-        function jsValToString(jsVal) { /* ... same ... */ 
+        function jsValToString(jsVal) { 
             return (typeof jsVal === 'string') ? jsVal : (jsVal && typeof jsVal.as_string === 'function') ? jsVal.as_string() : String(jsVal);
         }
-        function applyEvoViewTransform() { /* ... same zoom/pan transform logic ... */
-            evoPlotMasterGroup.setAttribute('transform', `translate(${evoViewBox.x}, ${evoViewBox.y}) scale(${evoZoomLevel})`);
+        function applyEvoViewTransform() { 
+            if(evoPlotMasterGroup) evoPlotMasterGroup.setAttribute('transform', `translate(${evoViewBox.x}, ${evoViewBox.y}) scale(${evoZoomLevel})`);
         }
 
+        if (evolutionSvgElement) { // Add event listeners only if SVG element exists
+            evolutionSvgElement.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                const zoomIntensity = 0.1;
+                const svgRect = evolutionSvgElement.getBoundingClientRect();
+                const mouseX = event.clientX - svgRect.left;
+                const mouseY = event.clientY - svgRect.top;
+                const pointXBeforeZoom = (mouseX - evoViewBox.x) / evoZoomLevel;
+                const pointYBeforeZoom = (mouseY - evoViewBox.y) / evoZoomLevel;
+                let newZoomLevel = evoZoomLevel;
+                if (event.deltaY < 0) { newZoomLevel *= (1 + zoomIntensity); } 
+                else { newZoomLevel *= (1 - zoomIntensity); }
+                newZoomLevel = Math.max(0.05, Math.min(20, newZoomLevel)); 
+                evoViewBox.x = mouseX - pointXBeforeZoom * newZoomLevel;
+                evoViewBox.y = mouseY - pointYBeforeZoom * newZoomLevel;
+                evoZoomLevel = newZoomLevel;
+                applyEvoViewTransform();
+            });
+            evolutionSvgElement.addEventListener('mousedown', (event) => {
+                if (event.button !== 0) return; 
+                evoIsPanning = true;
+                evoLastPanPosition = { x: event.clientX, y: event.clientY };
+                evolutionSvgElement.style.cursor = 'grabbing';
+            });
+            evolutionSvgElement.addEventListener('mousemove', (event) => {
+                if (!evoIsPanning) return;
+                const dx = event.clientX - evoLastPanPosition.x;
+                const dy = event.clientY - evoLastPanPosition.y;
+                evoViewBox.x += dx; evoViewBox.y += dy;
+                evoLastPanPosition = { x: event.clientX, y: event.clientY };
+                applyEvoViewTransform();
+            });
+            evolutionSvgElement.addEventListener('mouseup', () => { 
+                evoIsPanning = false; evolutionSvgElement.style.cursor = 'grab';
+            });
+            evolutionSvgElement.addEventListener('mouseleave', () => { 
+                if (evoIsPanning) { evoIsPanning = false; evolutionSvgElement.style.cursor = 'grab';}
+            });
+        }
 
-        evolutionSvgElement.addEventListener('wheel', (event) => { /* ... same zoom logic ... */
-            event.preventDefault();
-            const zoomIntensity = 0.1;
-            const svgRect = evolutionSvgElement.getBoundingClientRect();
-            const mouseX = event.clientX - svgRect.left;
-            const mouseY = event.clientY - svgRect.top;
-            const pointXBeforeZoom = (mouseX - evoViewBox.x) / evoZoomLevel;
-            const pointYBeforeZoom = (mouseY - evoViewBox.y) / evoZoomLevel;
-            let newZoomLevel = evoZoomLevel;
-            if (event.deltaY < 0) { newZoomLevel *= (1 + zoomIntensity); } 
-            else { newZoomLevel *= (1 - zoomIntensity); }
-            newZoomLevel = Math.max(0.05, Math.min(20, newZoomLevel)); // Adjusted zoom limits
-            evoViewBox.x = mouseX - pointXBeforeZoom * newZoomLevel;
-            evoViewBox.y = mouseY - pointYBeforeZoom * newZoomLevel;
-            evoZoomLevel = newZoomLevel;
-            applyEvoViewTransform();
-        });
-        evolutionSvgElement.addEventListener('mousedown', (event) => { /* ... same pan start ... */
-            if (event.button !== 0) return; 
-            evoIsPanning = true;
-            evoLastPanPosition = { x: event.clientX, y: event.clientY };
-            evolutionSvgElement.style.cursor = 'grabbing';
-         });
-        evolutionSvgElement.addEventListener('mousemove', (event) => { /* ... same pan move ... */
-            if (!evoIsPanning) return;
-            const dx = event.clientX - evoLastPanPosition.x;
-            const dy = event.clientY - evoLastPanPosition.y;
-            evoViewBox.x += dx; evoViewBox.y += dy;
-            evoLastPanPosition = { x: event.clientX, y: event.clientY };
-            applyEvoViewTransform();
-        });
-        evolutionSvgElement.addEventListener('mouseup', () => { /* ... same pan end ... */ 
-            evoIsPanning = false; evolutionSvgElement.style.cursor = 'grab';
-        });
-        evolutionSvgElement.addEventListener('mouseleave', () => { /* ... same pan end on leave ... */
-            if (evoIsPanning) { evoIsPanning = false; evolutionSvgElement.style.cursor = 'grab';}
-        });
-
-
-        window.toggleFullLog = () => { /* ... same ... */ };
-        window.exportFullLog = () => { /* ... same ... */ };
-        window.clearFullLog = () => { /* ... same ... */ };
+        window.toggleFullLog = () => { 
+            fullOutputLog.style.display = (fullOutputLog.style.display === 'none' || fullOutputLog.style.display === '') ? 'block' : 'none';
+            if (fullOutputLog.style.display === 'block') fullOutputLog.scrollTop = fullOutputLog.scrollHeight;
+        };
+        window.exportFullLog = () => {
+             const blob = new Blob([fullOutputLog.value], { type: 'text/plain' }); const anchor = document.createElement('a');
+             anchor.download = 'paired_binary_log.txt'; anchor.href = URL.createObjectURL(blob);
+             anchor.click(); URL.revokeObjectURL(anchor.href);
+         };
+        window.clearFullLog = () => { fullOutputLog.value = ''; };
 
         document.addEventListener('DOMContentLoaded', initializeWasm);
 
