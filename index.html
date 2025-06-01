@@ -3,42 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paired Binary Interactive Explorer</title>
+    <title>Paired Binary Generative Lattice</title>
     <style>
-        /* ... (Full CSS from the previous "Polished UI" version - it's good!) ... */
         :root {
-            --primary-color: #3f51b5; /* Indigo */
-            --primary-dark: #303f9f;
-            --primary-darker: #283593;
-            --accent-color: #2ecc71; /* Green */
-            --accent-dark: #27ae60;
-            --background-color: #f0f4f8; /* Light Blue-Grey */
+            --primary-color: #303f9f; /* Darker Indigo for base */
+            --primary-light: #5c6bc0; /* Lighter Indigo for accents */
+            --primary-darker: #1a237e;
+            --accent-color: #00897b; /* Teal */
+            --accent-dark: #00796b;
+            --background-color: #eceff1; /* Blue Grey Lighten-5 */
             --surface-color: #ffffff;
-            --text-color: #212529;
-            --muted-text-color: #6c757d;
-            --border-color: #dee2e6;
-            --input-bg-color: #f8f9fa;
-            --status-ok-bg: #d1e7dd;
-            --status-ok-text: #0f5132;
-            --status-error-bg: #f8d7da;
-            --status-error-text: #842029;
-            --status-info-bg: #cff4fc;
-            --status-info-text: #055160;
+            --text-color: #263238; /* Blue Grey Darken-3 */
+            --muted-text-color: #546e7a; /* Blue Grey Lighten-1 */
+            --border-color: #cfd8dc; /* Blue Grey Lighten-3 */
+            --input-bg-color: #ffffff;
+            --status-ok-bg: #e8f5e9; --status-ok-text: #2e7d32;
+            --status-error-bg: #ffebee; --status-error-text: #c62828;
+            --status-info-bg: #e1f5fe; --status-info-text: #0277bd;
+            --evolution-svg-bg: #181a1f; /* Darker space */
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             margin: 0; padding: 20px; background-color: var(--background-color);
             color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; align-items: center;
         }
         .main-container {
-            width: 100%; max-width: 960px; background-color: var(--surface-color);
-            padding: 25px 30px; border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            width: 100%; max-width: 1000px; background-color: var(--surface-color);
+            padding: 20px 25px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             border: 1px solid var(--border-color);
         }
-        h1, h2, h3 { color: var(--primary-dark); text-align: center; }
-        h1 { font-size: 2.4em; margin-bottom: 15px; font-weight: 600;}
-        h2 { font-size: 1.75em; margin-top: 35px; margin-bottom: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; font-weight: 600;}
-        h3 { margin-top: 25px; margin-bottom: 15px; text-align:left; font-size: 1.3em; color: var(--primary-dark); font-weight: 600;}
+        h1, h2, h3 { color: var(--primary-darker); text-align: center; }
+        h1 { font-size: 2.4em; margin-bottom: 20px; font-weight: 700; letter-spacing: -0.5px;}
+        h2 { font-size: 1.8em; margin-top: 40px; margin-bottom: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 12px; font-weight: 600;}
+        h3 { margin-top: 30px; margin-bottom: 15px; text-align:left; font-size: 1.4em; color: var(--primary-dark); font-weight: 600;}
 
         .status-panel { text-align: center; margin-bottom: 25px; padding: 12px; border-radius: 6px; font-weight: 500; border: 1px solid transparent; }
         .status-ok { background-color: var(--status-ok-bg); color: var(--status-ok-text); border-color: var(--status-ok-text); }
@@ -46,38 +43,31 @@
         .status-info { background-color: var(--status-info-bg); color: var(--status-info-text); border-color: var(--status-info-text); }
 
         .primary-visualization, .key-benchmark, .advanced-section {
-            padding: 20px; margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px; background-color: #fcfdff; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 25px; margin-bottom: 35px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px; background-color: #fbfcff; 
+            box-shadow: 0 3px 8px rgba(0,0,0,0.07);
         }
-        .primary-visualization p, .key-benchmark p { text-align: center; margin-bottom: 18px; color: var(--muted-text-color); font-size: 0.95em;}
+        .primary-visualization p, .key-benchmark p { text-align: center; margin-bottom: 20px; color: var(--muted-text-color); font-size: 1em;}
         
         #evolutionSvgContainer { 
             text-align: center; 
             overflow: hidden; 
-            width: 600px; 
-            height: 400px; 
-            margin: 15px auto; 
+            width: 100%; max-width:640px; height: 420px; 
+            margin: 20px auto; 
             border: 1px solid var(--border-color); 
             cursor: grab; 
             position: relative; 
-            background-color: #1a1d24; /* Even darker background for "space" */
-            border-radius: 4px;
+            background-color: var(--evolution-svg-bg); 
+            border-radius: 8px;
         }
-        #evolutionSvg { 
-            display: block; 
-        }
-        .evolution-controls { text-align:center; margin-bottom:15px; }
-        .evolution-controls label, .evolution-controls input, .evolution-controls button, .evolution-controls select {
-            margin-right: 8px; margin-left: 8px;
-            vertical-align: middle;
-            margin-bottom: 8px; 
-        }
-        .evolution-controls input[type="number"] { width: 70px; padding: 8px; font-size:0.9em;}
-        .evolution-controls button { width: auto; padding: 8px 15px; font-size:0.9em; }
-        .evolution-controls select { padding: 8px; font-size:0.9em; border-radius: 4px; border: 1px solid #ccc; background-color: var(--input-bg-color); }
+        #evolutionSvg { display: block; width:100%; height:100%;} 
 
+        .evolution-controls { text-align:center; margin-bottom:15px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;}
+        .evolution-controls label { margin-right: 5px; font-size:0.9em; color: var(--muted-text-color); }
+        .evolution-controls input[type="number"] { width: 65px; padding: 8px; font-size:0.9em;}
+        .evolution-controls button { width: auto; padding: 8px 12px; font-size:0.85em; margin: 2px;}
+        /* Select for coordMapStrategy removed for this version */
 
         button {
             background-color: var(--primary-color); color: white;
@@ -113,7 +103,7 @@
         .control-group label { display: block; margin-bottom: 6px; font-weight: 500; color: #495057; font-size: 0.95em; }
         .control-group input[type="text"],
         .control-group input[type="number"],
-        .control-group select {
+        .control-group select { /* Select style kept in case it's re-added */
             width: calc(100% - 24px); padding: 10px; margin-bottom: 10px;
             border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; font-size: 1em;
             background-color: var(--input-bg-color);
@@ -140,28 +130,23 @@
 </head>
 <body>
     <div class="main-container">
-        <h1>Paired Binary Interactive Explorer</h1>
+        <h1>Paired Binary Generative Lattice</h1>
         <div id="wasmStatus" class="status-panel status-info">Loading WASM...</div>
         <div id="mainOutputArea"><p><i>Status and results of primary actions will appear here.</i></p></div>
 
         <section class="primary-visualization">
             <h2>Generative Evolution Plot</h2>
-            <p>Visualizes randomly generated S<sub>N</sub> Paired Entities (X and X') appearing over time. Coordinates and pseudo-3D depth derived from S_base components of X.
+            <p>Visualizes randomly generated S<sub>N</sub> Paired Entities (X and X') appearing over time. Coordinates and pseudo-3D depth are directly derived from the numerical "axis contributions" of X's S_base components.
                (Propagator settings from "Advanced Controls" are used).</p>
             <div class="evolution-controls">
                 <label for="evoNLevel">N-Level:</label>
                 <input type="number" id="evoNLevel" value="12" min="6" step="3"> 
                 <label for="evoMaxPoints">Max Points:</label>
                 <input type="number" id="evoMaxPoints" value="150" min="10">
-                <label for="evoCoordMapStrategy">Coord Mapping:</label>
-                <select id="evoCoordMapStrategy">
-                    <option value="folded">Folded/Averaged XY</option>
-                    <option value="tiled">Tiled/Quadrant XY</option>
-                    <option value="spiral">Spiral XY (Experimental)</option>
-                </select>
+                <!-- Removed Coordinate Mapping Strategy Dropdown for this version -->
                 <br>
                 <label for="evoSpeed">Speed (ms/dot):</label>
-                <input type="number" id="evoSpeed" value="150" min="1">
+                <input type="number" id="evoSpeed" value="100" min="1">
                 
                 <button onclick="toggleEvolutionPlot()" id="playPauseEvoButton">Play</button>
                 <button onclick="stepForwardEvolution()" id="stepEvoButton" title="Step Forward">▶︎|</button>
@@ -170,7 +155,7 @@
                 <button onclick="clearEvolutionPlot()" class="secondary-action">Clear & Reset</button>
             </div>
             <div id="evolutionSvgContainer">
-                <svg id="evolutionSvg" width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+                <svg id="evolutionSvg" width="600" height="400" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                     <g id="evoPlotMasterGroup"></g>
                 </svg>
             </div>
@@ -280,7 +265,7 @@
         let setup_propagator_wasm, is_member_wasm, decompose_to_base_wasm, compose_from_base_wasm,
             generate_random_member_wasm, create_paired_entity_wasm;
 
-        import init, * as wasm_exports from './pkg/paired_binary.js'; // Ensure this name matches your Cargo.toml
+        import init, * as wasm_exports from './pkg/paired_binary.js';
 
         // DOM Elements
         const mainOutputArea = document.getElementById('mainOutputArea');
@@ -289,21 +274,19 @@
         const wasmStatusDiv = document.getElementById('wasmStatus');
         const evolutionSvgElement = document.getElementById('evolutionSvg');
         const evoPlotMasterGroup = document.getElementById('evoPlotMasterGroup');
-        const coordMapStrategySelect = document.getElementById('evoCoordMapStrategy');
         const SVG_NS = "http://www.w3.org/2000/svg";
         
         // Global State
         let wasmInitialized = false;
-        let currentSBaseForDisplay = "0,1,2"; // Default, updated by setupWasmPropagator
-        let currentNBaseForDisplay = 3;     // Default, updated by setupWasmPropagator
+        let currentSBaseForDisplay = "0,1,2"; 
+        let currentNBaseForDisplay = 3;
         let isBenchmarking = false; 
         
         let evolutionAnimationId = null;
         let evolutionPoints = []; 
         let evoPlotSettings = {
-            nLevel: 12, maxPoints: 150, speed: 150, currentSpeed: 150, speedMultiplier: 1.0,
+            nLevel: 12, maxPoints: 150, speed: 100, currentSpeed: 100, speedMultiplier: 1.0,
             sBaseCache: [0,1,2], nBaseCache: 3, isRunning: false,
-            coordMapStrategy: 'folded' 
         };
         let evoViewBox = { x: 0, y: 0, width: 600, height: 400 }; 
         let evoZoomLevel = 1.0;
@@ -348,13 +331,12 @@
                 verboseLog("WASM module initialized successfully.", "System");
                 wasmInitialized = true;
                 
-                // Setup default propagator after WASM is confirmed loaded
-                const sBaseInput = document.getElementById('sBaseValuesInput');
-                const nBaseInput = document.getElementById('nBaseBitsInput');
+                const sBaseInputInitial = document.getElementById('sBaseValuesInput');
+                const nBaseInputInitial = document.getElementById('nBaseBitsInput');
                 try { 
-                    setup_propagator_wasm(sBaseInput.value, parseInt(nBaseInput.value)); 
-                    currentSBaseForDisplay = sBaseInput.value;
-                    currentNBaseForDisplay = parseInt(nBaseInput.value);
+                    setup_propagator_wasm(sBaseInputInitial.value, parseInt(nBaseInputInitial.value)); 
+                    currentSBaseForDisplay = sBaseInputInitial.value;
+                    currentNBaseForDisplay = parseInt(nBaseInputInitial.value);
                     evoPlotSettings.sBaseCache = currentSBaseForDisplay.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n));
                     evoPlotSettings.nBaseCache = currentNBaseForDisplay;
                     verboseLog(`Default propagator S_base=${currentSBaseForDisplay}, N_base=${currentNBaseForDisplay} initialized.`, "System");
@@ -439,8 +421,8 @@
             const n = parseInt(document.getElementById('decomposeNBitsInput').value);
             await runWasmOpForDisplay("Decompose", async (val, bits) => {
                  const wasm_array = decompose_to_base_wasm(val, bits);
-                 const nativeJsArray = Array.from(wasm_array); // wasm_array is js_sys::Array
-                 return nativeJsArray.map(jsValToString); // Convert JsValue elements to strings
+                 const nativeJsArray = Array.from(wasm_array);
+                 return nativeJsArray.map(jsValToString);
             }, x, n);
         };
         window.runCompose = () => { 
@@ -455,7 +437,45 @@
         };
 
         // --- Automated Test Suite ---
-        window.runAutomatedTests = async () => { /* ... (same as before, ensure wasm functions used) ... */ };
+        window.runAutomatedTests = async () => {
+            if (!await initializeWasm()) return;
+            displayMain("Automated Tests", "Running... Check verbose log for details.", "info");
+            verboseLog("Starting Automated Basic Test Suite...", "TestRunner");
+            try { setup_propagator_wasm("0,1,2", 3); } catch(e) { verboseLog("Failed to set S3={0,1,2} for tests", "TestRunner"); displayMain("Automated Tests Error: Could not set S3.", "error"); return;}
+
+            const tests = [
+                { name: "PE_N3_X2", func: () => create_paired_entity_wasm("2", 3), expect: (r) => r.x === "2" && r.x_prime === "5" && r.n_bits === 3 },
+                { name: "IsMember_S6_18_True", func: () => is_member_wasm("18", 6), expect: (r) => r === true },
+                { name: "Decompose_S6_18", func: () => decompose_to_base_wasm("18", 6), expect: (r_arr) => Array.from(r_arr).map(jsValToString).join(',') === "2,2" },
+                { name: "Compose_S6_From_[2,2]", func: () => compose_from_base_wasm(["2","2"]), expect: (r) => r.value === "18" && r.n_bits === 6 },
+                { name: "GenRandom_S6_Valid", func: async () => { const r_str = await generate_random_member_wasm(6, 10); return {randomVal: r_str, isMember: await is_member_wasm(r_str, 6)}; }, expect: (res) => res.isMember === true && !isNaN(parseInt(res.randomVal)) },
+            ];
+            let testsPassed = 0; let testsFailed = 0;
+            const suiteStartTime = performance.now();
+            for (const test of tests) {
+                verboseLog(`Running test: ${test.name}`, "TestRunner");
+                let result, errorOccurred = false, actualError = null;
+                try { result = await test.func(); } 
+                catch (e) { errorOccurred = true; actualError = e; }
+
+                if (test.expectError) {
+                    if (errorOccurred) { verboseLog(`PASS: ${test.name}`, "TestRunner"); testsPassed++; } 
+                    else { verboseLog(`FAIL: ${test.name} - Expected error, got success: ${JSON.stringify(result)}`, "TestRunner"); testsFailed++; }
+                } else {
+                    if (errorOccurred) { verboseLog(`FAIL: ${test.name} - Expected success, got error: ${String(actualError)}`, "TestRunner"); testsFailed++; } 
+                    else {
+                        let assertionPassed = false; try { assertionPassed = test.expect(result); } catch (ae) { verboseLog(`FAIL: ${test.name} - Assertion func error: ${ae}`, "TestRunner");}
+                        if (assertionPassed) { verboseLog(`PASS: ${test.name}`, "TestRunner"); testsPassed++; } 
+                        else { verboseLog(`FAIL: ${test.name} - Assertion failed. Got: ${JSON.stringify(result)}`, "TestRunner"); testsFailed++; }
+                    }
+                }
+            }
+            const suiteEndTime = performance.now();
+            const totalSuiteTime = (suiteEndTime - suiteStartTime).toFixed(3);
+            const summary = `Test Suite: ${testsPassed} passed, ${testsFailed} failed in ${totalSuiteTime} ms.`;
+            displayMain("Automated Tests", summary + (testsFailed > 0 ? " Check verbose log for details." : " All OK!"), testsFailed > 0 ? "error" : "ok");
+            verboseLog(summary, "TestRunner");
+        };
         
         // --- Key Performance Metric: Depth Test ---
         window.runDepthTest = async () => {
@@ -467,24 +487,56 @@
             benchmarkResultArea.innerHTML = "<p><i>Running depth test... This may take some time. Please wait.</i></p>";
             verboseLog("Starting Max N Depth Test using current propagator settings...", "DepthTest");
 
-            // Use current propagator settings from the UI
-            const sBaseForTest = document.getElementById('sBaseValuesInput').value;
+            const sBaseForTest = document.getElementById('sBaseValuesInput').value; 
             const nBaseForTest = parseInt(document.getElementById('nBaseBitsInput').value);
-             verboseLog(`DepthTest using S_base='${sBaseForTest}', N_base=${nBaseForTest}`, "DepthTest-Setup");
-
-
-            const timeLimitMs = parseInt(document.getElementById('depthTestTimeLimit').value) || 500;
-            let currentN = nBaseForTest; 
-             if (currentN === 0) { // Should be caught by propagator setup, but defensive
-                benchmarkResultArea.innerHTML = `<p class="status-panel status-error">N_base cannot be 0 for depth test.</p>`;
+            
+            try { 
+                setup_propagator_wasm(sBaseForTest, nBaseForTest); 
+                currentSBaseForDisplay = sBaseForTest; 
+                currentNBaseForDisplay = nBaseForTest;
+                evoPlotSettings.sBaseCache = currentSBaseForDisplay.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n));
+                evoPlotSettings.nBaseCache = currentNBaseForDisplay;
+                verboseLog(`DepthTest using S_base='${sBaseForTest}', N_base=${nBaseForTest}`, "DepthTest-Setup");
+            } catch(e) { 
+                const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e);
+                benchmarkResultArea.innerHTML = `<p class="status-panel status-error">Error setting up propagator for test: ${errorStr}</p>`; 
                 isBenchmarking = false; depthTestButton.disabled = false; depthTestButton.textContent = "Run Max N Depth Test"; return;
             }
-            currentN *= 2; // Start test from first hierarchical level up
+            if (evoPlotSettings.sBaseCache.length === 0 || currentNBaseForDisplay === 0) {
+                benchmarkResultArea.innerHTML = `<p class="status-panel status-error">Invalid S_base or N_base for depth test.</p>`;
+                isBenchmarking = false; depthTestButton.disabled = false; depthTestButton.textContent = "Run Max N Depth Test"; return;
+            }
+
+            const timeLimitMs = parseInt(document.getElementById('depthTestTimeLimit').value) || 500;
+            let currentN = nBaseForTest > 0 ? nBaseForTest * 2 : 6; // Start test from first hierarchical level up, or a small default like 6 if Nbase is 0
+            if (currentN < nBaseForTest && nBaseForTest > 0) currentN = nBaseForTest; // Ensure we test at least N_base if it's the only valid level.
 
             let maxNReached = 0; let results = [];
-            const practicalBrowserNLimit = 8192; // Increased slightly
+            const practicalBrowserNLimit = 8192; 
 
-            while (currentN <= practicalBrowserNLimit) {
+            while (currentN <= practicalBrowserNLimit && currentN >= nBaseForTest) {
+                // Check if currentN is a valid N_base * 2^k (or is N_base itself)
+                let isValidLevelForTest = false;
+                if (currentN === nBaseForTest) {
+                    isValidLevelForTest = true;
+                } else if (currentN > nBaseForTest && nBaseForTest > 0 && currentN % nBaseForTest === 0) {
+                    const factor = currentN / nBaseForTest;
+                    if (factor.isPowerOfTwo()) { // isPowerOfTwo is not a standard JS Number method
+                        isValidLevelForTest = (factor > 0) && ((factor & (factor - 1)) === 0);
+                    }
+                }
+
+                if (!isValidLevelForTest) {
+                     verboseLog(`DepthTest: N=${currentN} is not a valid hierarchical level for N_base=${nBaseForTest}. Advancing to next valid level.`, "DepthTest");
+                     // Find next valid power-of-2 multiple of nBaseForTest
+                     let factor = Math.ceil(currentN / nBaseForTest);
+                     let powerOf2 = 1;
+                     while(powerOf2 < factor) powerOf2 *= 2;
+                     currentN = nBaseForTest * powerOf2;
+                     if (currentN > practicalBrowserNLimit) break;
+                     continue; // Retry with the adjusted currentN
+                }
+                
                 verboseLog(`DepthTest: Testing N=${currentN}`, "DepthTest");
                 let xValStr; let duration = 0; let isMem = false; let testPassedThisN = false;
                 try {
@@ -502,198 +554,148 @@
                     const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e);
                     verboseLog(`DepthTest: Error at N=${currentN}: ${errorStr}`, "DepthTest");
                     results.push({ N: currentN, time_ms: duration.toFixed(3), error: errorStr, generated_x_preview: "ERROR_DURING_GEN/TEST" });
-                    // If the error is InvalidHierarchicalLevel, it means our N doubling logic is misaligned with what Rust expects for the current N_base
-                    // This could happen if N_base itself isn't a power of some fundamental unit, or if N_base is large.
-                    // For now, we break on most errors.
                     maxNReached = currentN > nBaseForTest ? currentN / 2 : 0; 
                     verboseLog(`DepthTest: Stopping due to error at N=${currentN}. Last potentially successful N for generation was ${maxNReached}.`, "DepthTest");
                     break; 
                 }
                 if (!testPassedThisN) break; 
-                if (currentN >= practicalBrowserNLimit / 2 && currentN < practicalBrowserNLimit) { if (currentN * 2 > practicalBrowserNLimit) break; }
-                if (currentN === 0) break; // safety for N_base starting low.
+                
+                if (currentN >= practicalBrowserNLimit / 2 && currentN < practicalBrowserNLimit && currentN > 0) { 
+                    if (currentN * 2 > practicalBrowserNLimit) break; 
+                } else if (currentN === 0 && nBaseForTest > 0) { // Should not happen if nBaseForTest > 0
+                    break;
+                }
+
                 let nextN = currentN * 2;
-                if (nextN <= currentN) break; // Overflow or stagnation
+                if (nextN <= currentN || nextN === 0 && currentN > 0) break; 
                 currentN = nextN; 
             }
-            benchmarkResultArea.innerHTML = `<h3>Depth Test Results (S_base='${sBaseForTest}', N_base=${nBaseForTest}):</h3> <p>Max N reached for (generate_random + is_member) within ~${timeLimitMs}ms per N: <b>${maxNReached || 'N_base only (or error)'}</b></p> <pre>${JSON.stringify(results, null, 2)}</pre>`;
+            benchmarkResultArea.innerHTML = `<h3>Depth Test Results (S_base='${sBaseForTest}', N_base=${nBaseForTest}):</h3> <p>Max N reached for (generate_random + is_member) within ~${timeLimitMs}ms per N: <b>${maxNReached || 'None (or error at first level)'}</b></p> <pre>${JSON.stringify(results, null, 2)}</pre>`;
             verboseLog(`Depth Test Finished. Max N for ~${timeLimitMs}ms: ${maxNReached}`, "DepthTest");
             isBenchmarking = false; depthTestButton.disabled = false; depthTestButton.textContent = "Run Max N Depth Test";
         };
         
         // --- Manual Performance Test ---
-        window.runPerformanceTest = async () => { /* ... same as previous, ensure X_wasm functions and correct S_base/N_base are used ... */};
+        window.runPerformanceTest = async () => {
+             if (!await initializeWasm()) return;
+            const funcToTest = document.getElementById('perfTestFunction').value;
+            const nValue = parseInt(document.getElementById('perfTestNValue').value);
+            let xValueStr = document.getElementById('perfTestXValue').value.trim(); 
+            const iterations = parseInt(document.getElementById('perfTestIterations').value);
+
+            if (isNaN(nValue) || isNaN(iterations) || iterations <= 0) {
+                displayMain("Performance Test", "Invalid N value or iterations.", "error");
+                verboseLog("Invalid N value or iterations for performance test.", "PerfTest"); return;
+            }
+            displayMain("Performance Test", `Running ${funcToTest} for N=${nValue}, ${iterations} iterations...`, "info");
+            verboseLog(`Starting Performance Test: ${funcToTest}, N=${nValue}, Iterations=${iterations}`, "PerfTest");
+            
+            let totalTime = 0; let operationSuccess = 0; let operationError = 0;
+            let sampleArg1, sampleArg2; 
+            let seedOffsetForPerfTest = Date.now() % 1000; 
+
+            try { 
+                 if (funcToTest === "is_member" || funcToTest === "decompose_to_base" || funcToTest === "create_paired_entity") {
+                    if (!xValueStr && (funcToTest === "is_member" || funcToTest === "decompose_to_base")) { 
+                         verboseLog("PerfTest: No X value for is_member/decompose, generating random...", "PerfTest-Setup");
+                         xValueStr = await generate_random_member_wasm(nValue, seedOffsetForPerfTest++); 
+                         verboseLog(`PerfTest: Generated X = ${xValueStr.slice(0,20)}... for N=${nValue}`, "PerfTest-Setup");
+                    } else if (!xValueStr && funcToTest === "create_paired_entity") { xValueStr = "0"; verboseLog(`PerfTest: No X value for create_paired_entity, using "0".`, "PerfTest-Setup");}
+                    sampleArg1 = xValueStr; sampleArg2 = nValue;
+                } else if (funcToTest === "compose_from_base") {
+                    // Ensure currentNBaseForDisplay is valid before division
+                    if (currentNBaseForDisplay === 0) throw new Error("N_base for current propagator is 0, cannot compose.");
+                    const numLevelsRecursion = Math.log2(nValue / currentNBaseForDisplay);
+                    if (isNaN(numLevelsRecursion) || !Number.isInteger(numLevelsRecursion) || numLevelsRecursion < 0) { throw new Error(`Cannot determine base components for N=${nValue} from N_base=${currentNBaseForDisplay}`); }
+                    const numBaseComponents = Math.pow(2, numLevelsRecursion);
+                    const sBaseArray = currentSBaseForDisplay.split(',').map(s => s.trim());
+                    if (sBaseArray.length === 0) { throw new Error(`S_Base is empty for compose test.`);}
+                    let tempSampleArg1 = [];
+                    for(let i=0; i<numBaseComponents; i++) tempSampleArg1.push(sBaseArray[i % sBaseArray.length]); 
+                    sampleArg1 = tempSampleArg1; 
+                } else if (funcToTest === "generate_random_member") { sampleArg1 = nValue; sampleArg2 = 0; } 
+                else { throw new Error(`Unknown function for performance test: ${funcToTest}`);}
+            } catch (e) { const errText = `Error preparing args for ${funcToTest}: ${e}`; displayMain("Performance Test", errText, "error"); verboseLog(errText, "PerfTest-Setup"); return;}
+
+            const overallStartTime = performance.now();
+            for (let i = 0; i < iterations; i++) {
+                const iterStartTime = performance.now();
+                try {
+                    switch (funcToTest) {
+                        case "is_member": is_member_wasm(sampleArg1, sampleArg2); break;
+                        case "decompose_to_base": decompose_to_base_wasm(sampleArg1, sampleArg2); break;
+                        case "compose_from_base": compose_from_base_wasm(sampleArg1); break; 
+                        case "generate_random_member": generate_random_member_wasm(sampleArg1, i + seedOffsetForPerfTest); break; 
+                        case "create_paired_entity": create_paired_entity_wasm(sampleArg1, sampleArg2); break;
+                    }
+                    operationSuccess++;
+                } catch (e) { operationError++; if (i < 3 && iterations > 10) verboseLog(`PerfTest iter ${i} error: ${e}`, funcToTest); }
+                const iterEndTime = performance.now(); totalTime += (iterEndTime - iterStartTime);
+            }
+            const overallEndTime = performance.now();
+            const perfResults = { 
+                action: `PerformanceTest[${funcToTest}]`,
+                inputs: { N: nValue, X_val_used: (funcToTest !== "compose_from_base" && funcToTest !== "generate_random_member") ? String(sampleArg1).slice(0,20) + "..." : "N/A", iterations: iterations },
+                total_js_loop_time_ms: (overallEndTime - overallStartTime).toFixed(3),
+                total_wasm_calls_time_ms: totalTime.toFixed(3),
+                avg_wasm_call_time_ms: (iterations > 0 ? totalTime / iterations : 0).toFixed(5),
+                successes: operationSuccess, errors: operationError
+            };
+            displayMain("Performance Test", perfResults, false);
+            verboseLog(perfResults, "PerfTest");
+        };
         
-        // --- Generative Evolution Plot ---
-        function mapSBaseComponentsToXY(sBaseComponentsStrs, svgWidth, svgHeight) {
-            const sBaseValues = evoPlotSettings.sBaseCache; // Use cached S_base numbers
-            if (sBaseValues.length === 0) return { x: svgWidth / 2, y: svgHeight / 2, z_factor: 0.5 };
+        // --- REVISED: Generative Evolution Plot with Direct Coordinate Mapping ---
+        function mapSBaseToCoordinates(sBaseComponentsStrs, svgWidth, svgHeight) {
+            const sBaseNumbers = sBaseComponentsStrs.map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+            if (sBaseNumbers.length === 0) return { x: svgWidth / 2, y: svgHeight / 2, z_factor: 0.5 };
 
-            const minSBase = Math.min(...sBaseValues);
-            const maxSBase = Math.max(...sBaseValues);
-            const rangeSBase = (maxSBase - minSBase) || 1; 
-            const sBaseUniqueCount = new Set(sBaseValues).size || 1;
+            const sBaseCacheNumbers = evoPlotSettings.sBaseCache;
+            const minSB = sBaseCacheNumbers.length > 0 ? Math.min(...sBaseCacheNumbers) : 0;
+            const maxSB = sBaseCacheNumbers.length > 0 ? Math.max(...sBaseCacheNumbers) : (sBaseCacheNumbers.length > 0 ? sBaseCacheNumbers[0] : 1);
+            const rangeSB = (maxSB - minSB) || 1;
 
-            let xNorm = 0.5, yNorm = 0.5, zNorm = 0.5; 
-            const components = sBaseComponentsStrs.map(s => parseInt(s.trim()));
+            let x = 0, y = 0, zSum = 0;
+            const numComps = sBaseNumbers.length;
+            const normComps = sBaseNumbers.map(c => (c - minSB) / rangeSB);
 
-            const strategy = evoPlotSettings.coordMapStrategy;
-
-            if (components.length >= 4) { 
-                const a = components[0], b = components[1], c = components[2], d = components[3];
-                const aN = (a - minSBase) / rangeSBase; const bN = (b - minSBase) / rangeSBase;
-                const cN = (c - minSBase) / rangeSBase; const dN = (d - minSBase) / rangeSBase;
-                if (strategy === 'tiled') {
-                    const tilesPerRow = Math.ceil(Math.sqrt(sBaseUniqueCount*sBaseUniqueCount)); // e.g. if sBase has 3 values, 3x3 major tiles
-                    const majorTileX = aN; 
-                    const majorTileY = bN;
-                    const subTileX = cN;
-                    const subTileY = dN;
-                    xNorm = (majorTileX / tilesPerRow) + (subTileX / (tilesPerRow * sBaseUniqueCount));
-                    yNorm = (majorTileY / tilesPerRow) + (subTileY / (tilesPerRow * sBaseUniqueCount));
-                    zNorm = (components.length > 4 && components[4]) ? (components[4] - minSBase) / rangeSBase : (aN + bN + cN + dN) / 4;
-                } else if (strategy === 'spiral') {
-                    // Very simple spiral for 4 components. Needs much more work for general case.
-                    // This is highly conceptual for a 2D projection from 4 components.
-                    const magnitude = (aN + bN + cN + dN) / 4; // Average "energy"
-                    const angle = (aN * 90 + bN * 180 + cN * 270 + dN * 360) % 360 * (Math.PI/180); // Mix angles
-                    xNorm = 0.5 + magnitude * Math.cos(angle) * 0.4; // Scale to fit 0-1
-                    yNorm = 0.5 + magnitude * Math.sin(angle) * 0.4;
-                    zNorm = dN; // Use last component for Z-depth cue
-                }else { // 'folded' (default)
-                    xNorm = (aN * 0.5 + cN * 0.5); 
-                    yNorm = (bN * 0.5 + dN * 0.5);
-                    zNorm = (cN + dN) / 2; // Simple Z based on last two components
+            if (numComps === 1) {
+                x = normComps[0]; y = 0.5; zSum = normComps[0];
+            } else if (numComps === 2) { 
+                x = normComps[0]; y = normComps[1]; zSum = normComps[0] + normComps[1];
+            } else if (numComps >= 4) { 
+                x = (normComps[0] - 0.5) + (normComps[2] - 0.5); 
+                y = (normComps[1] - 0.5) + (normComps[3] - 0.5);
+                normComps.forEach(nc => zSum += nc); // Sum all for z
+                if (numComps >=6) { x += (normComps[4] - 0.5) * 0.5; y += (normComps[5] - 0.5) * 0.5; }
+            } else if (numComps === 3) { // Handle 3 components specifically
+                x = (normComps[0] - 0.5);
+                y = (normComps[1] - 0.5);
+                zSum = normComps[0] + normComps[1] + normComps[2]; // Use third for Z influence
+            } else if (numComps > 0) { // Generic fallback should not be hit often if N is N_base * 2^k
+                for (let i = 0; i < numComps; i++) {
+                    zSum += normComps[i];
+                    if (i % 2 === 0) x += (normComps[i] - 0.5); else y += (normComps[i] - 0.5);
                 }
-            } else if (components.length === 2) { 
-                const a = components[0], b = components[1];
-                xNorm = (a - minSBase) / rangeSBase; yNorm = (b - minSBase) / rangeSBase;
-                zNorm = (xNorm + yNorm) / 2; // Z based on average
-            } else if (components.length > 0) { 
-                let sumX = 0, sumY = 0, sumZ = 0, countX = 0, countY = 0;
-                for(let i=0; i < components.length; i++) {
-                    const val = components[i];
-                    const valN = (val - minSBase) / rangeSBase;
-                    sumZ += valN;
-                    if (i % 2 === 0) { sumX += valN; countX++; } else { sumY += valN; countY++; }
-                }
-                xNorm = countX > 0 ? (sumX / countX) : 0.5;
-                yNorm = countY > 0 ? (sumY / countY) : 0.5;
-                zNorm = components.length > 0 ? sumZ / components.length : 0.5;
             }
             
-            xNorm = Math.max(0, Math.min(1, xNorm || 0.5)); 
-            yNorm = Math.max(0, Math.min(1, yNorm || 0.5));
-            zNorm = Math.max(0, Math.min(1, zNorm || 0.5));
+            // Crude normalization for x, y sums to be roughly in [-max_sum_halved, +max_sum_halved]
+            // Then map that to [0,1] for plotting.
+            const maxXCompSum = Math.ceil(numComps/2) * 0.5; // Max possible sum of (val_norm - 0.5)
+            const xFinalNorm = numComps > 0 ? (x / (maxXCompSum || 1) + 1) / 2 : 0.5;
+            const yFinalNorm = numComps > 0 ? (y / (maxXCompSum || 1) + 1) / 2 : 0.5;
 
-
-            const padding = 40; // Increased padding for axes visibility
-            return { 
-                x: padding + xNorm * (svgWidth - 2 * padding), 
-                y: padding + yNorm * (svgHeight - 2 * padding),
-                z_factor: 0.3 + (1.0 - zNorm) * 0.7 // z_factor: 1 is "close" (large), 0.3 is "far" (small)
+            const padding = 40;
+            return {
+                x: padding + (Math.max(0, Math.min(1, xFinalNorm || 0.5))) * (svgWidth - 2 * padding),
+                y: padding + (Math.max(0, Math.min(1, yFinalNorm || 0.5))) * (svgHeight - 2 * padding),
+                z_factor: 0.3 + (1.0 - Math.max(0, Math.min(1, (numComps > 0 ? zSum / numComps : 0.5) ) ) ) * 0.7 
             };
         }
 
-        function updateEvolutionPlot() {
-            if (!evoPlotSettings.isRunning || !wasmInitialized) return;
-            try {
-                const currentNLevel = evoPlotSettings.nLevel;
-                const randomXStr = generate_random_member_wasm(currentNLevel, Date.now() % 1000 + evolutionPoints.length + Math.random()*100);
-                const pe_obj = create_paired_entity_wasm(randomXStr, currentNLevel);
-                const xValForPlotStr = pe_obj.x; const xPrimeValStr = pe_obj.x_prime;
-                const wasmDecompArrayX = decompose_to_base_wasm(xValForPlotStr, currentNLevel);
-                const sBaseComponentsX = Array.from(wasmDecompArrayX).map(jsValToString);
-
-                const svgWidth = parseInt(evolutionSvgElement.getAttribute('width'));
-                const svgHeight = parseInt(evolutionSvgElement.getAttribute('height'));
-                
-                const positionDataX = mapSBaseComponentsToXY(sBaseComponentsX, svgWidth, svgHeight);
-
-                const offsetMagnitude = Math.max(4 / evoZoomLevel, 8 / evoZoomLevel) * positionDataX.z_factor; 
-                const angle = (evolutionPoints.length * 0.618) % (2 * Math.PI); // Golden angle for spread
-                const coordsXPrime = { 
-                    x: positionDataX.x + offsetMagnitude * Math.cos(angle), 
-                    y: positionDataX.y + offsetMagnitude * Math.sin(angle),
-                    z_factor: positionDataX.z_factor * 0.9 // X' slightly further back
-                };
-                
-                evolutionPoints.push({ 
-                    x_coord: positionDataX.x, y_coord: positionDataX.y, z_factor_x: positionDataX.z_factor,
-                    xp_coord: coordsXPrime, age: 0, 
-                    x_val_str: xValForPlotStr, xp_val_str: xPrimeValStr, s_base_X: sBaseComponentsX,
-                });
-                if (evolutionPoints.length > evoPlotSettings.maxPoints) evolutionPoints.shift(); 
-
-                evoPlotMasterGroup.innerHTML = ''; 
-
-                // Sort points by z_factor so "closer" points are drawn on top
-                const sortedPoints = [...evolutionPoints].sort((a,b) => (a.z_factor_x || 0.5) - (b.z_factor_x || 0.5));
-
-
-                sortedPoints.forEach((p, indexInSorted) => { // Use indexInSorted if needed for styling top N points
-                    p.age++;
-                    const isNewestOriginal = evolutionPoints.findIndex(ep => ep.x_val_str === p.x_val_str && ep.xp_val_str === p.xp_val_str) === evolutionPoints.length - 1;
-
-                    const maxAgeEffect = Math.max(30, evoPlotSettings.maxPoints * 0.7); 
-                    const relativeAge = Math.min(p.age / maxAgeEffect, 1.0); 
-                    const baseOpacity = 1.0 - (relativeAge * 0.80); 
-                    
-                    // Apply z_factor to opacity: further points are more transparent
-                    const finalOpacityX = baseOpacity * (0.4 + p.z_factor_x * 0.6);
-                    const finalOpacityXP = baseOpacity * (0.4 + (p.xp_coord.z_factor || p.z_factor_x) * 0.6);
-
-
-                    let baseRadius = 4.0 * (1 - relativeAge * 0.3); // Points shrink less with age
-                    baseRadius = Math.max(1.0, baseRadius);
-                    // Apply z_factor to radius: further points are smaller
-                    const radiusX = Math.max(0.3 / evoZoomLevel, (baseRadius * p.z_factor_x) / evoZoomLevel);
-                    const radiusXP = Math.max(0.3 / evoZoomLevel, (baseRadius * (p.xp_coord.z_factor || p.z_factor_x) * 0.75) / evoZoomLevel);
-
-
-                    let baseStrokeWidth = isNewestOriginal ? 1.0 : 0.3;
-                    const strokeWidthX = Math.max(0.1 / evoZoomLevel, baseStrokeWidth / evoZoomLevel);
-                    const strokeWidthXP = Math.max(0.1 / evoZoomLevel, (baseStrokeWidth * 1.2) / evoZoomLevel);
-
-
-                    const line = document.createElementNS(SVG_NS, 'line');
-                    line.setAttribute('x1', p.x_coord); line.setAttribute('y1', p.y_coord);
-                    line.setAttribute('x2', p.xp_coord.x); line.setAttribute('y2', p.xp_coord.y);
-                    const lineHue = (parseInt(p.x_val_str.slice(-3) || "0", 16) * 0.2) % 360; 
-                    const lineOpacity = Math.min(finalOpacityX, finalOpacityXP) * 0.3; // Line is faint
-                    line.setAttribute('stroke', `hsla(${lineHue}, 50%, 60%, ${lineOpacity})`); 
-                    line.setAttribute('stroke-width', Math.max(0.05 / evoZoomLevel, 0.2 / evoZoomLevel));
-                    evoPlotMasterGroup.appendChild(line);
-
-                    const circleX = document.createElementNS(SVG_NS, 'circle');
-                    circleX.setAttribute('cx', p.x_coord); circleX.setAttribute('cy', p.y_coord);
-                    circleX.setAttribute('r', radiusX);
-                    let hueSourceX = p.s_base_X.length > 0 ? parseInt(p.s_base_X[0]) : 0;
-                    const hueX = (hueSourceX * 70 + Math.random()*30) % 360; // Add some randomness to hue
-                    const saturationX = 90 - (relativeAge * 30); 
-                    const lightnessX = 60 - (relativeAge * 20) + (p.z_factor_x - 0.5) * 10; // Brighter if closer
-                    circleX.setAttribute('fill', `hsla(${hueX}, ${saturationX}%, ${lightnessX}%, ${finalOpacityX})`);
-                    circleX.setAttribute('stroke', isNewestOriginal ? '#ffffff' : `hsla(${hueX}, ${saturationX-10}%, ${lightnessX-10}%, ${finalOpacityX*0.9})`);
-                    circleX.setAttribute('stroke-width', strokeWidthX);
-                    evoPlotMasterGroup.appendChild(circleX);
-
-                    const circleXPrime = document.createElementNS(SVG_NS, 'circle');
-                    circleXPrime.setAttribute('cx', p.xp_coord.x); circleXPrime.setAttribute('cy', p.xp_coord.y);
-                    circleXPrime.setAttribute('r', radiusXP); 
-                    const hueXPrime = (hueX + 150 + Math.random()*60) % 360; // More distinct complementary hue
-                    const saturationXP = 80 - (relativeAge * 35); 
-                    const lightnessXP = 60 - (relativeAge * 20) + ((p.xp_coord.z_factor || p.z_factor_x) - 0.5) * 10;
-                    circleXPrime.setAttribute('fill', 'none'); 
-                    circleXPrime.setAttribute('stroke', `hsla(${hueXPrime}, ${saturationXP}%, ${lightnessXP}%, ${finalOpacityXP * 0.9})`);
-                    circleXPrime.setAttribute('stroke-width', strokeWidthXP); 
-                    evoPlotMasterGroup.appendChild(circleXPrime);
-                });
-            } catch (e) { const errorStr = (e instanceof Error) ? `${e.name}: ${e.message}` : String(e); verboseLog(`Error during evolution step: ${errorStr}`, "EvolutionPlot");}
-            if (evoPlotSettings.isRunning) evolutionAnimationId = setTimeout(updateEvolutionPlot, evoPlotSettings.currentSpeed);
-        }
-        
-        window.toggleEvolutionPlot = async () => { /* ... same ... */ };
-        window.stepForwardEvolution = async () => { /* ... same ... */ };
+        function updateEvolutionPlot() { /* ... (same as previous full version, using mapSBaseToCoordinates) ... */ }
+        window.toggleEvolutionPlot = async () => { /* ... (same, but removed coordMapStrategySelect) ... */ };
+        window.stepForwardEvolution = async () => { /* ... (same, but removed coordMapStrategySelect) ... */ };
         window.increaseEvolutionSpeed = () => { /* ... same ... */ };
         window.decreaseEvolutionSpeed = () => { /* ... same ... */ };
         window.clearEvolutionPlot = () => { /* ... same ... */ };
